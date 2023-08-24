@@ -12,7 +12,7 @@ class Persona(db.Model):
     direccion = db.Column(db.Text, nullable=False)
     telefono = db.Column(db.Numeric(12), nullable=False)
     contraseña = db.Column(db.Text, nullable=False)
-    fecha_nac = db.Column(db.Date, nullable=False)
+    fecha_nac = db.Column(db.Date, nullable=True)
     especialidad = db.Column(db.String(30), nullable=True)
     id_espe = db.Column(db.Integer, db.ForeignKey('persona.id_persona'), nullable=True)
 

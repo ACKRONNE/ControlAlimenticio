@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Paciente</title>
+</head>
+<body>
+    <div>
+        <p>{{perfil.nombre}} <a href="/update">update</a></p> 
+        <p>{{perfil.apellido}} <a href="/update">update</a></p> 
+        <p>{{perfil.sexo}} <a href="/update">update</a></p> 
+        <p>{{perfil.fecha_nac}} <a href="/update">update</a></p> 
+        <p>{{perfil.correo}} <a href="/update">update</a></p> 
+        <p>{{perfil.direccion}} <a href="/update">update</a></p> 
+        <p>{{perfil.telefono}} <a href="/update">update</a></p> 
+        <p>{{perfil.contraseña}} <a href="/update">update</a></p> 
+        <a href="{{ url_for('delUsr.delPac', id=perfil.id_persona) }}">Eliminar Cuenta</a>
+        <p>---</p>
+    </div>
+</body>
+</html>

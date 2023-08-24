@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio Paciente</title>
 </head>
 <body>
+    <a href="{{ url_for('perfil.perfilPac', id=inicio.id_persona)}}">Perfil</a>
+    <p>{{inicio.nombre}}</p>
+    <p>{{inicio.id_persona}}</p>
     <h1>Paciente</h1>
 </body>
 </html>

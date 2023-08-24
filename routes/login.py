@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, Response, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from models.persona import Persona
 from utils.db import db
 
@@ -7,7 +7,6 @@ log = Blueprint('log', __name__)
 @log.route('/')
 def index():
     return render_template('index.html')
-
 
 
 @log.route('/login', methods=['GET','POST'])
@@ -24,10 +23,12 @@ def login():
             session['id'] = account.id_persona
             session['tipo'] = account.tipo
 
+            _id = session['id']
+
             if session['tipo'] == 'p':
-                return render_template('ini_paciente.html')
+                return redirect(url_for('inicio.inicioPac', id=_id))
             elif session['tipo'] == 'e':
-                return render_template('ini_especialista.html')
+                return redirect(url_for('inicio.inicioEsp', id=_id))
         else:
             return render_template('index.html', mensaje = 'El usuario no se encuentra registrado')
     else:
