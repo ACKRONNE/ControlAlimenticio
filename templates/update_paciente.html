@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update Papi</h1>
+      <!-- // -->
+  <div>
+    <form action="{{url_for('updtUsr.updatePac', id=get_usr.id_persona)}}" method="POST" class="form-control">
+
+        <div class="form-group">
+          <label>Correo</label>
+          <input type="email" class="form-control" placeholder="Enter email" name="updt-correo-pac" value="{{get_usr.correo}}">
+        </div>
+
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre" name="updt-nombre-pac" value="{{get_usr.nombre}}">
+        </div>
+
+        <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" class="form-control" placeholder="Apellido" name="updt-apellido-pac" value="{{get_usr.apellido}}">
+        </div>
+
+        <div class="form-group">
+            <label>Genero</label>
+            <input type="text" class="form-control" name="updt-genero-pac" value="{{get_usr.sexo}}">
+        </div>
+        
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" class="form-control" placeholder="Password" name="updt-contraseña-pac" value="{{get_usr.contraseña}}">
+        </div>
+
+        <div class="form-group">
+            <label>Direccion</label>
+            <input type="text" class="form-control" placeholder="El Hatillo, 5303" name="updt-direccion-pac" value="{{get_usr.direccion}}">
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" class="form-control" name="updt-fechaNac-pac" value="{{get_usr.fecha_nac}}">
+        </div>
+
+        <div class="form-group">
+            <label>Telefono</label>
+            <input type="number" class="form-control" placeholder="0414231333" name="updt-telefono-pac" value="{{get_usr.telefono}}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Aceptar</button>
+      </form>
+    </div>
+    <!-- // -->
+</body>
+</html>

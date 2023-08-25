@@ -14,6 +14,7 @@ from routes.registro import registro
 from routes.perfil import perfil
 from routes.eliminar_cuenta import delUsr
 from routes.inicio import inicio
+from routes.update_cuenta import updtUsr
 
 app = Flask(__name__)
 
@@ -30,4 +31,5 @@ app.register_blueprint(registro)
 app.register_blueprint(perfil)
 app.register_blueprint(delUsr)
 app.register_blueprint(inicio)
+app.register_blueprint(updtUsr)
 

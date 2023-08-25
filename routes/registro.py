@@ -42,7 +42,7 @@ def registroPac():
 
         db.session.add(new_pac)
         db.session.commit()
-        return render_template('ini_paciente.html')
+        return redirect(url_for('log.login'))
 
     else:
         return render_template('registro_paciente.html')
@@ -80,7 +80,7 @@ def registroEsp():
 
         db.session.add(new_esp)
         db.session.commit()
-        return render_template('ini_especialista.html')
+        return redirect(url_for('log.login'))
 
     else:
         return render_template('registro_especialista.html')
