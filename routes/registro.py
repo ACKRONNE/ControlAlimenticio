@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models.persona import Persona
 from utils.db import db
 
@@ -42,6 +42,9 @@ def registroPac():
 
         db.session.add(new_pac)
         db.session.commit()
+
+        flash("Usuario Agregado con exito")
+
         return redirect(url_for('log.login'))
 
     else:

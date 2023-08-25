@@ -16,11 +16,19 @@ from routes.eliminar_cuenta import delUsr
 from routes.inicio import inicio
 from routes.update_cuenta import updtUsr
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 app = Flask(__name__)
 
 # settings
-app.secret_key = "123456"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123456@localhost/control_alimenticio'
+key = os.environ['SECRETKEY']
+config = os.environ['MYSQLCONFIG']
+
+app.secret_key = key
+app.config['SQLALCHEMY_DATABASE_URI'] = config
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # inicializar la aplicacion con la base de datos
