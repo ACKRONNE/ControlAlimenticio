@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page Tile -->
     <title>Document</title>
+
+    <!-- Browser tab icon -->
+    <link rel="shortcut icon" type="x-icon" href="static\images\Logo.png">
+
 </head>
 <body>
-    <h1>Pagina Principal de Inicio de sesion</h1>
+    <!-- Fundation Logo -->
+    <img src="static\images\Logo.png" alt="Imagen relacionada" width="100">
+
+    <!-- Text Area -->
+    <h1>Bienvenido</h1>
+    <h4>Descubre un camino hacia una alimentación saludable y equilibrada. Aprende a nutrir tu cuerpo de manera consciente, alcanza un bienestar integral</h4>
+
+    <!-- Buttons -->
     <a href="{{ url_for('log.login') }}">login</a>
     <a href="{{ url_for('registro.registroUsuario') }}">Registrarse</a>
 </body>
