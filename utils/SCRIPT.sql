@@ -17,7 +17,6 @@ CREATE TABLE persona(
     tipo            char(1)         NOT NULL        CHECK(tipo IN ('p','e')),
     sexo            char(1)         NOT NULL        CHECK(sexo IN ('m','f')),
     correo          text            NOT NULL        UNIQUE,
-    direccion       text            NOT NULL,
     telefono        numeric(12)     NOT NULL,
     contraseña      text            NOT NULL,
     fecha_nac       date,

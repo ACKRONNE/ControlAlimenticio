@@ -10,7 +10,7 @@ def inicioPac(id):
     return render_template("ini_paciente.html", inicio=inicio)
 
 
-@inicio.route('/inicio_especialista')
+@inicio.route('/inicio_especialista/<id>')
 def inicioEsp(id):
     inicio = Persona.query.get(id)
-    return render_template('ini_paciente.html', inicio=inicio)
+    return render_template('ini_especialista.html', inicio=inicio)

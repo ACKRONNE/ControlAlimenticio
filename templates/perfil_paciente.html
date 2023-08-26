@@ -16,6 +16,7 @@
         <p>{{perfil.telefono}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.contraseña}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <a href="{{ url_for('delUsr.delPac', id=perfil.id_persona) }}">Eliminar Cuenta</a>
+        <a href="{{ url_for('log.logout', id=perfil.id_persona) }}">Cerrar Sesion</a>
         <p>---</p>
     </div>
 </body>

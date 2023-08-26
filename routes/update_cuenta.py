@@ -15,7 +15,6 @@ def updatePac(id):
         get_usr.tipo = 'p'
         get_usr.sexo = request.form['updt-genero-pac']
         get_usr.correo = request.form['updt-correo-pac']
-        get_usr.direccion = request.form['updt-direccion-pac']
         get_usr.telefono = request.form['updt-telefono-pac']
         get_usr.contraseña = request.form['updt-contraseña-pac']
         get_usr.fecha_nac = request.form['updt-fechaNac-pac']

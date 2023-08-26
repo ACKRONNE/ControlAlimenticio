@@ -15,6 +15,7 @@ from routes.perfil import perfil
 from routes.eliminar_cuenta import delUsr
 from routes.inicio import inicio
 from routes.update_cuenta import updtUsr
+from routes.password_recovery import password
 
 from dotenv import load_dotenv
 import os
@@ -40,4 +41,5 @@ app.register_blueprint(perfil)
 app.register_blueprint(delUsr)
 app.register_blueprint(inicio)
 app.register_blueprint(updtUsr)
+app.register_blueprint(password)
 

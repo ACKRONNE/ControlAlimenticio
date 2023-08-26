@@ -9,7 +9,6 @@ class Persona(db.Model):
     tipo = db.Column(db.String(1), nullable=False)
     sexo = db.Column(db.String(1), nullable=False)
     correo = db.Column(db.Text, nullable=False, unique=True)
-    direccion = db.Column(db.Text, nullable=False)
     telefono = db.Column(db.Numeric(12), nullable=False)
     contraseña = db.Column(db.Text, nullable=False)
     fecha_nac = db.Column(db.Date, nullable=True)
@@ -23,13 +22,12 @@ class Persona(db.Model):
         (CheckConstraint("sexo IN ('m', 'f')", name='persona_sexo_check')),
     )
 
-    def __init__(self, nombre, apellido, tipo, sexo, correo, direccion, telefono, contraseña, fecha_nac, especialidad, id_espe):
+    def __init__(self, nombre, apellido, tipo, sexo, correo, telefono, contraseña, fecha_nac, especialidad, id_espe):
         self.nombre = nombre
         self.apellido = apellido
         self.tipo = tipo
         self.sexo = sexo
         self.correo = correo
-        self.direccion = direccion
         self.telefono = telefono
         self.contraseña = contraseña
         self.fecha_nac = fecha_nac

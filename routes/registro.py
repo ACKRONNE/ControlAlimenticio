@@ -19,7 +19,6 @@ def registroPac():
         _tipo = 'p'
         _sexo = request.form['txt-genero-pac']
         _correo = request.form['txt-correo-pac']
-        _direccion = request.form['txt-direccion-pac']
         _telefono = request.form['txt-telefono-pac']
         _contraseña = request.form['txt-contraseña-pac']
         _fechaNac = request.form['txt-fechaNac-pac']
@@ -32,7 +31,6 @@ def registroPac():
             _tipo,
             _sexo,
             _correo,  
-            _direccion,  
             _telefono,  
             _contraseña,  
             _fechaNac,
@@ -60,7 +58,6 @@ def registroEsp():
         _tipo = 'e'
         _sexo = request.form['txt-genero-esp']
         _correo = request.form['txt-correo-esp']
-        _direccion = request.form['txt-direccion-esp']
         _telefono = request.form['txt-telefono-esp']
         _contraseña = request.form['txt-contraseña-esp']
         _fechaNac = None
@@ -73,7 +70,6 @@ def registroEsp():
             _tipo,
             _sexo,
             _correo,  
-            _direccion,  
             _telefono,  
             _contraseña,  
             _fechaNac,
