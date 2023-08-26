@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eleccion Registro</title>
+    <title>Tipo de Usuario</title>
 </head>
 <body>
+    <a href="{{ url_for('log.index') }}">Volver</a>
+    <h1>Registro</h1>
+
     <h1>Soy un</h1>
     <a href="{{ url_for('registro.registroPac') }}">paciente</a>
     <a href="{{ url_for('registro.registroEsp') }}">especialista</a>

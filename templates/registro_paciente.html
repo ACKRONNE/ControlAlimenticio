@@ -7,9 +7,22 @@
 </head>
 <body>
 
-  {% include 'partials/_message.html' %}
-
+  <!-- Notificacion -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{message}}
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
   <!-- // -->
+
+  <!-- Static title -->
+  <a href="{{ url_for('registro.registroUsuario') }}">Volver</a>
+  <h1>Registro</h1>
+  <!-- // -->
+
+  <!-- Action form -->
   <div>
     <form action="/registro_paciente" method="POST" class="form-control">
 
@@ -29,13 +42,19 @@
         </div>
 
         <div class="form-group">
-            <label>Genero</label>
-            <input type="text" class="form-control" name="txt-genero-pac">
+          <label>Género</label>
+          <div>
+              <label><input type="radio" name="txt-genero-pac" value="m"> Hombre</label><br>
+              <label><input type="radio" name="txt-genero-pac" value="f"> Mujer</label><br>
+          </div>
         </div>
         
         <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" class="form-control" placeholder="Password" name="txt-contraseña-pac">
+          <label>Contraseña</label>
+          <div class="input-group">
+              <input type="password" class="form-control" placeholder="Password" name="txt-contraseña-pac" id="passwordField">
+              <button type="button" id="togglePassword" class="btn btn-secondary">Mostrar</button>
+          </div>
         </div>
 
         <div class="form-group">
@@ -56,6 +75,27 @@
         <button type="submit" class="btn btn-primary">Aceptar</button>
       </form>
     </div>
+    <!-- // -->
+
+    <!-- Terms and Conditions -->
+    <a href="#">Al continuar acepta nuestros terminos y condiciones.</a>
+
+    <!-- --- -->
+    <!-- JS code -->
+    <script>
+      const passwordField = document.getElementById('passwordField');
+      const togglePassword = document.getElementById('togglePassword');
+      
+      togglePassword.addEventListener('click', () => {
+          if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              togglePassword.textContent = 'Ocultar';
+          } else {
+              passwordField.type = 'password';
+              togglePassword.textContent = 'Mostrar';
+          }
+      });
+    </script>
     <!-- // -->
 
 </body>

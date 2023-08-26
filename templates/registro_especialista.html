@@ -3,11 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registro Especialista</title>
 </head>
 <body>
 
-    <!-- // -->
+  <!-- Notificacion -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{message}}
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <!-- // -->
+
+  <!-- Static title -->
+  <a href="{{ url_for('registro.registroUsuario') }}">Volver</a>
+  <h1>Registro</h1>
+  <!-- // -->
+
+  <!-- Action form -->
   <div>
     <form action="/registro_especialista" method="POST" class="form-control">
 
@@ -18,43 +33,70 @@
 
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" class="form-control" placeholder="Password" name="txt-nombre-esp">
+          <input type="text" class="form-control" placeholder="Nombre" name="txt-nombre-esp">
         </div>
 
         <div class="form-group">
             <label>Apellido</label>
-            <input type="text" class="form-control" placeholder="Password" name="txt-apellido-esp">
+            <input type="text" class="form-control" placeholder="Apellido" name="txt-apellido-esp">
         </div>
 
         <div class="form-group">
-            <label>Genero</label>
-            <input type="text" class="form-control" placeholder="Password" name="txt-genero-esp">
+          <label>Género</label>
+          <div>
+              <label><input type="radio" name="txt-genero-esp" value="m"> Hombre</label><br>
+              <label><input type="radio" name="txt-genero-esp" value="f"> Mujer</label><br>
+          </div>
         </div>
         
         <div class="form-group">
             <label>Contraseña</label>
-            <input type="password" class="form-control" placeholder="Password" name="txt-contraseña-esp">
-        </div>
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="Password" name="txt-contraseña-esp" id="passwordField">
+                <button type="button" id="togglePassword" class="btn btn-secondary">Mostrar</button>
+            </div>
+          </div>
 
         <div class="form-group">
             <label>Direccion</label>
-            <input type="text" class="form-control" placeholder="Password" name="txt-direccion-esp">
+            <input type="text" class="form-control" placeholder="Toronto, Canada" name="txt-direccion-esp">
         </div>
 
         <div class="form-group">
             <label>Telefono</label>
-            <input type="number" class="form-control" placeholder="Password" name="txt-telefono-esp">
+            <input type="number" class="form-control" placeholder="02123232123" name="txt-telefono-esp">
         </div>
 
         <div class="form-group">
             <label>Especialidad</label>
-            <input type="text" class="form-control" placeholder="Password" name="txt-especialidad-esp">
+            <input type="text" class="form-control" placeholder="Nutricionista" name="txt-especialidad-esp">
         </div>
 
         <button type="submit" class="btn btn-primary">Aceptar</button>
       </form>
     </div>
     <!-- // -->
+
+    <!-- Terms and Conditions -->
+    <a href="#">Al continuar acepta nuestros terminos y condiciones.</a>
+
+    <!-- --- -->
+    <!-- JS code -->
+    <script>
+      const passwordField = document.getElementById('passwordField');
+      const togglePassword = document.getElementById('togglePassword');
+      
+      togglePassword.addEventListener('click', () => {
+          if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              togglePassword.textContent = 'Ocultar';
+          } else {
+              passwordField.type = 'password';
+              togglePassword.textContent = 'Mostrar';
+          }
+      });
+    </script>
+    <!-- // -->    
 
 </body>
 </html>
