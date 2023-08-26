@@ -27,3 +27,28 @@ def updatePac(id):
     else:
         get_usr = Persona.query.get(id)
         return render_template("update_paciente.html", get_usr=get_usr)
+
+
+@updtUsr.route('/update_especialista/<id>', methods=["GET","POST"])
+def updateEsp(id):
+    if request.method == 'POST':
+
+        get_usr = Persona.query.get(id)
+
+        get_usr.nombre = request.form['updt-nombre-esp']
+        get_usr.apellido = request.form['updt-apellido-esp']
+        get_usr.tipo = 'p'
+        get_usr.sexo = request.form['updt-genero-esp']
+        get_usr.correo = request.form['updt-correo-esp']
+        get_usr.telefono = request.form['updt-telefono-esp']
+        get_usr.contraseña = request.form['updt-contraseña-esp']
+        get_usr.fecha_nac = None
+        get_usr.especialidad = request.form['updt-especialidad-esp']
+        get_usr.id_espe = None 
+
+        db.session.commit()
+
+        return redirect(url_for('inicio.inicioPac', id=id))
+    else:
+        get_usr = Persona.query.get(id)
+        return render_template("update_paciente.html", get_usr=get_usr)

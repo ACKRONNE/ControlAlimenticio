@@ -9,4 +9,8 @@ def perfilPac(id):
     perfil = Persona.query.get(id)
     return render_template("perfil_paciente.html", perfil=perfil)
 
+@perfil.route('/perfil_especialista/<id>', methods=["GET"])
+def perfilEsp(id):
+    perfil = Persona.query.get(id)
+    return render_template("perfil_especialista.html", perfil=perfil)
 

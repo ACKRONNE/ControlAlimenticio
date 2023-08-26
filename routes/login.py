@@ -42,9 +42,6 @@ def logout(id):
     if user is None:
         return "Usuario no encontrado"
 
-    if 'account' not in session or session['account'] != int(id):
-        return "No hay una sesión activa para este usuario"
-
     if user.id_persona == int(id):
         session.clear()
         return redirect(url_for('log.index'))

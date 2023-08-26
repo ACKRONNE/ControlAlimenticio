@@ -6,13 +6,18 @@
     <title>Perfil Paciente</title>
 </head>
 <body>
+
+  <!-- Static title -->
+  <a href="{{ url_for('inicio.inicioPac', id=perfil.id_persona) }}">Volver</a>
+  <h1>Perfil</h1>
+  <!-- // -->
+
     <div>
         <p>{{perfil.nombre}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.apellido}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.sexo}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.fecha_nac}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.correo}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
-        <p>{{perfil.direccion}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.telefono}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <p>{{perfil.contraseña}} <a href="{{ url_for('updtUsr.updatePac', id=perfil.id_persona) }}">update</a></p> 
         <a href="{{ url_for('delUsr.delPac', id=perfil.id_persona) }}">Eliminar Cuenta</a>

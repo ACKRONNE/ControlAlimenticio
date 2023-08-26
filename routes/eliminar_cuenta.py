@@ -10,3 +10,10 @@ def delPac(id):
     db.session.delete(get_usr)
     db.session.commit()
     return render_template('del_paciente.html', get_usr=get_usr)
+
+@delUsr.route('/del_especialista/<id>', methods=["GET"])
+def delEsp(id):
+    get_usr = Persona.query.get(id)
+    db.session.delete(get_usr)
+    db.session.commit()
+    return render_template('del_especialista.html', get_usr=get_usr)

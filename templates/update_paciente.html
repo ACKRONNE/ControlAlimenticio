@@ -6,8 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Update Papi</h1>
-      <!-- // -->
+  <!-- Static title -->
+  <a href="{{ url_for('perfil.perfilPac', id=get_usr.id_persona) }}">Volver</a>
+  <h1>Update papi</h1>
+  <!-- // -->
+
+ <!-- Forms -->
   <div>
     <form action="{{url_for('updtUsr.updatePac', id=get_usr.id_persona)}}" method="POST" class="form-control">
 
@@ -27,18 +31,16 @@
         </div>
 
         <div class="form-group">
-            <label>Genero</label>
-            <input type="text" class="form-control" name="updt-genero-pac" value="{{get_usr.sexo}}">
-        </div>
+            <label>Género</label>
+            <div>
+                <label><input type="radio" name="txt-genero-pac" value="m"> Hombre</label><br>
+                <label><input type="radio" name="txt-genero-pac" value="f"> Mujer</label><br>
+            </div>
+          </div>
         
         <div class="form-group">
             <label>Contraseña</label>
             <input type="password" class="form-control" placeholder="Password" name="updt-contraseña-pac" value="{{get_usr.contraseña}}">
-        </div>
-
-        <div class="form-group">
-            <label>Direccion</label>
-            <input type="text" class="form-control" placeholder="El Hatillo, 5303" name="updt-direccion-pac" value="{{get_usr.direccion}}">
         </div>
 
         <div class="form-group">
@@ -55,5 +57,6 @@
       </form>
     </div>
     <!-- // -->
+
 </body>
 </html>

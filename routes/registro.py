@@ -10,7 +10,7 @@ def registroUsuario():
     return render_template('registro_usuario.html')
 # ---
 
-# >
+# > registro paciente
 @registro.route('/registro_paciente', methods=['GET','POST'])
 def registroPac():
     if request.method == "POST":
@@ -49,7 +49,7 @@ def registroPac():
         return render_template('registro_paciente.html')
 # ---
 
-# >
+# > registro especialista
 @registro.route('/registro_especialista', methods=['GET','POST'])
 def registroEsp():
     if request.method == "POST":
