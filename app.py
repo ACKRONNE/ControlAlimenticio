@@ -4,10 +4,9 @@ from utils.db import db
 
 from models.alimento import Alimento
 from models.ar import AR
-from models.det_comida import DetComida
-from models.hist_receta import HistReceta
+from models.comida import Comida
+from models.hist_comida import HistComida
 from models.persona import Persona
-from models.receta import Receta
 
 from routes.login import log
 from routes.registro import registro

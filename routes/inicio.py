@@ -20,8 +20,7 @@ def inicioPac(id):
 
         return render_template('resultados.html', resultados=resultados)
     else:    
-
-    return render_template("ini_paciente.html", inicio=inicio, formatted_date=formatted_date)
+        return render_template("ini_paciente.html", inicio=inicio, formatted_date=formatted_date)
 
 
 @inicio.route('/inicio_especialista/<id>', methods=['GET', 'POST'])
