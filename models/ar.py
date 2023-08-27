@@ -6,8 +6,7 @@ class AR(db.Model):
     id_persona = db.Column(db.Integer, db.ForeignKey('persona.id_persona'), primary_key=True)
     id_alimento = db.Column(db.Integer, db.ForeignKey('alimento.id_alimento'), primary_key=True)
 
-    comida = db.relationship('Comida', backref='alimentos_comida', foreign_keys=[id_comida])
-    persona = db.relationship('Persona', backref='alimentos_comida_persona', foreign_keys=[id_persona])
+    comida_hist = db.relationship('Comida', backref='comida_hist', foreign_keys=[id_comida, id_persona])
     alimento = db.relationship('Alimento', backref='comidas_alimento', foreign_keys=[id_alimento])
 
     __table_args__ = (
