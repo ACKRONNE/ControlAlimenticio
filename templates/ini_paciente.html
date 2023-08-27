@@ -6,9 +6,20 @@
     <title>Inicio Paciente</title>
 </head>
 <body>
+    <h1>Mis comidas</h1>
+    <h3>{{ formatted_date }}</h3>
     <a href="{{ url_for('perfil.perfilPac', id=inicio.id_persona)}}">Perfil</a>
+
+    <form action="{{url_for('inicio.inicioPac', id=inicio.id_persona)}}" method="POST">
+            <input type="text" placeholder="Agust, 23 2023" name="srch-fecha">
+            <button type="submit" class="btn btn-primary">buscar</button>
+    </form>
+
+    <!-- data from the person -->
     <p>{{inicio.nombre}}</p>
     <p>{{inicio.id_persona}}</p>
     <h1>Paciente</h1>
+
+
 </body>
 </html>

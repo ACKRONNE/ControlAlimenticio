@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Mis Pacientes</h1>
+    <h3>{{ formatted_date }}</h3>
     <a href="{{ url_for('perfil.perfilEsp', id=inicio.id_persona)}}">Perfil</a>
     <p>{{inicio.nombre}}</p>
     <p>{{inicio.id_persona}}</p>
