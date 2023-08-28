@@ -62,7 +62,7 @@ def detallePac(id):
             Alimento.id_alimento == AR.id_alimento,
             Comida.id_persona == 6,
             HistComida.fecha_ini == '2023-03-15',
-            Comida.tipo == 'a'
+            Comida.tipo == 'd'
         )
     ).all()
 
