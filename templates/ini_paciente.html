@@ -10,16 +10,29 @@
     <h3>{{ formatted_date }}</h3>
     <a href="{{ url_for('perfil.perfilPac', id=inicio.id_persona)}}">Perfil</a>
 
+    <!-- Barra de buscador -->
     <form action="{{url_for('inicio.inicioPac', id=inicio.id_persona)}}" method="POST">
-            <input type="text" placeholder="Agust, 23 2023" name="srch-fecha">
-            <button type="submit" class="btn btn-primary">buscar</button>
+            <input type="text" placeholder="Agust, 23 2023" name="srch-fecha" required>
+            <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
+    <!-- // -->
+
+    <!-- Resultados de busqueda -->
+    <ul>
+        {{ formatted_fecha }}
+        {% for comida in resultados %}
+          <li>{{ comida.tipo }} <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">></a> <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">update</a> <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">delete</a></li>
+        {% endfor %}
+    </ul>
+    <!-- // -->
+
+    <h1>---Borrar---</h1>
 
     <!-- data from the person -->
     <p>{{inicio.nombre}}</p>
     <p>{{inicio.id_persona}}</p>
     <h1>Paciente</h1>
-
+    <!-- // -->
 
 </body>
 </html>

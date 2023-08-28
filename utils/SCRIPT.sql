@@ -55,40 +55,40 @@ VALUES (1,'Juan','Perez','p','m','juan.perez@example.com',5551234567,'1234','199
 (3,'Luis','Garcia','p','m','luis.garcia@example.com',3334567890,'1234','1920-03-05',NULL,3),
 (4,'Ana','Martinez','e','f','ana.martinez@example.com',2227891234,'1234',NULL,'nutricionista',NULL),
 (5,'Carlos','Rodriguez','p','m','carlos.rodriguez@example.com',6663210987,'1234','1910-03-07',NULL,4),
-(6,'Leonel','Messi','e','f','especialista@gmail.com',7779876543,'1234',NULL,'nutricionista',NULL),
-(7,'Kim','Kardashian','p','m','paciente@gmail.com',8882345678,'1234','2000-03-09',NULL,6);
+(6,'Kim','Kardashian','p','m','paciente@gmail.com',8882345678,'1234','2000-03-09',NULL,6),
+(7,'Leonel','Messi','e','f','especialista@gmail.com',7779876543,'1234',NULL,'nutricionista',NULL);
 
 INSERT INTO alimento
-VALUES (1,'proteina','carne',1),
-(2,'carbohidrato','papas',4),
-(3,'vegetal','champiñones',4),
-(4,'grasa','aceite de oliva',1),
-(5,'fruta','piña',2),
-(6,'bebida','limonada',1),
-(7,'otro','helado',1),
-(8,'proteina','pollo',2),
-(9,'carbohidrato','arroz',3),
-(10,'vegetal','espinacas',2),
-(11,'grasa','manteca de cerdo',1),
-(12,'fruta','manzana',3),
-(13,'bebida','agua',5),
-(14,'otro','galletas',6),
-(15,'proteina','pescado',1),
-(16,'carbohidrato','pan',5),
-(17,'vegetal','zanahorias',3),
-(18,'grasa','aguacate',2),
-(19,'fruta','fresa',7),
-(20,'bebida','té',2),
-(21,'proteina','huevo',2),
-(22,'carbohidrato','avena',1),
-(23,'fruta','plátano',1),
-(24,'otro','yogur',1),
-(25,'carbohidrato','pan integral',2),
-(26,'proteina','queso',2),
-(27,'grasa','mantequilla',1),
-(28,'bebida','café',1),
-(29,'carbohidrato','granola',1),
-(30,'bebida','jugo de naranja',1);
+VALUES (1,'p','carne',1),
+(2,'c','papas',4),
+(3,'v','champiñones',4),
+(4,'g','aceite de oliva',1),
+(5,'f','piña',2),
+(6,'b','limonada',1),
+(7,'o','helado',1),
+(8,'p','pollo',2),
+(9,'c','arroz',3),
+(10,'v','espinacas',2),
+(11,'g','manteca de cerdo',1),
+(12,'f','manzana',3),
+(13,'b','agua',5),
+(14,'o','galletas',6),
+(15,'p','pescado',1),
+(16,'c','pan',5),
+(17,'v','zanahorias',3),
+(18,'g','aguacate',2),
+(19,'f','fresa',7),
+(20,'b','té',2),
+(21,'p','huevo',2),
+(22,'c','avena',1),
+(23,'f','plátano',1),
+(24,'o','yogur',1),
+(25,'c','pan integral',2),
+(26,'p','queso',2),
+(27,'g','mantequilla',1),
+(28,'b','café',1),
+(29,'c','granola',1),
+(30,'b','jugo de naranja',1);
 
 INSERT INTO comida
 VALUES (1,7,'d',NULL,NULL),
@@ -102,13 +102,13 @@ VALUES (1,7,'d',NULL,NULL),
 
 INSERT INTO hist_comida
 VALUES (1,7,'2023-07-15','2023-07-20'),
-(2,7,'2023-06-10','2023-06-18'),
-(3,7,'2023-08-01','2023-08-05'),
-(4,7,'2023-04-22','2023-05-01'),
+(2,7,'2023-07-15','2023-06-18'),
+(3,7,'2023-07-15','2023-08-05'),
+(4,7,'2023-07-15','2023-05-01'),
 (5,6,'2023-03-15','2023-03-20'),
-(6,6,'2023-07-01','2023-07-10'),
-(7,6,'2023-08-20','2023-09-02'),
-(8,6,'2023-08-21','2023-09-03');
+(6,6,'2023-03-15','2023-07-10'),
+(7,6,'2023-03-15','2023-09-02'),
+(8,6,'2023-03-15','2023-09-03');
 
 INSERT INTO a_r
 VALUES (1,7,22),
@@ -151,7 +151,7 @@ DROP TABLE comida CASCADE;
 DROP TABLE hist_comida CASCADE;
 DROP TABLE a_r CASCADE;
 
--- D R O P  T A B L E
+-- T R U N C A T E  T A B L E
 TRUNCATE TABLE persona CASCADE;
 TRUNCATE TABLE alimento CASCADE;
 TRUNCATE TABLE comida CASCADE;
