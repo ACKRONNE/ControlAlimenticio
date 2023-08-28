@@ -40,6 +40,7 @@ def registroPac():
 
         db.session.add(new_pac)
         db.session.commit()
+        db.session.close()
 
         flash("Usuario Agregado con exito")
 
@@ -79,6 +80,7 @@ def registroEsp():
 
         db.session.add(new_esp)
         db.session.commit()
+        db.session.close()
         return redirect(url_for('log.login'))
 
     else:

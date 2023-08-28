@@ -21,7 +21,7 @@
     <ul>
         {{ formatted_fecha }}
         {% for comida in resultados %}
-          <li>{{ comida.tipo }} <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">></a> <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">update</a> <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">delete</a></li>
+          <li>{{ comida.tipo }} <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">></a> <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">update</a> <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">delete</a></li>
         {% endfor %}
     </ul>
     <!-- // -->
@@ -33,6 +33,32 @@
     <p>{{inicio.id_persona}}</p>
     <h1>Paciente</h1>
     <!-- // -->
+
+    <!-- TODO: Seria bueno colocar esto en una plantilla-->
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li>
+            <a href="/especialista">
+                <i class="fas fa-user-md"></i>
+                <span>Especialista</span>
+            </a>
+            </li>
+            <li>
+            <a href="/inicio">
+                <i class="fas fa-home"></i>
+                <span>Principal</span>
+            </a>
+            </li>
+            <li>
+            <a href="{{url_for('comida.comidaPac', id=inicio.id_persona)}}">
+                <i class="fas fa-utensils"></i>
+                <span>Comida</span>
+            </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- -- -->
 
 </body>
 </html>

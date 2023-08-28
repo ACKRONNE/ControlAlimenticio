@@ -15,6 +15,7 @@ from routes.eliminar_cuenta import delUsr
 from routes.inicio import inicio
 from routes.update_cuenta import updtUsr
 from routes.password_recovery import password
+from routes.comida import comida
 
 from dotenv import load_dotenv
 import os
@@ -41,4 +42,5 @@ app.register_blueprint(delUsr)
 app.register_blueprint(inicio)
 app.register_blueprint(updtUsr)
 app.register_blueprint(password)
+app.register_blueprint(comida)
 

@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from models.persona import Persona
 from models.comida import Comida
 from models.ar import AR
 from models.hist_comida import HistComida
 from models.alimento import Alimento
 from sqlalchemy import and_, distinct
+from sqlalchemy.orm import aliased
 from datetime import datetime
 from utils.db import db
 
@@ -29,22 +30,15 @@ def inicioPac(id):
         .join(HistComida, and_(Comida.id_comida == HistComida.id_comida, Comida.id_persona == HistComida.id_persona))\
         .filter(and_(Comida.id_persona == inicio.id_persona, HistComida.fecha_ini == fecha))
 
+        db.session.close()
+
         return render_template('ini_paciente.html', inicio=inicio, formatted_date=formatted_date, resultados=resultados, formatted_fecha=formatted_fecha)
     else:    
         return render_template("ini_paciente.html", inicio=inicio, formatted_date=formatted_date)
 
-
-@inicio.route('/inicio_especialista/<id>', methods=['GET', 'POST'])
-def inicioEsp(id):
-    inicio = Persona.query.get(id)    
-
-    date = datetime.now()
-    formatted_date = date.strftime("%b. %d")
-
-    return render_template('ini_especialista.html', inicio=inicio, formatted_date=formatted_date)
-
+# FIXME: Tengo que coloca los datos de la fecha y la comida que se actualicen automaticamente
 @inicio.route('/detalle_comida/<id>')
-def detallePac(id):    
+def detalleCom(id):    
 
     inicio = Persona.query.get(id)
 
@@ -65,5 +59,42 @@ def detallePac(id):
             Comida.tipo == 'd'
         )
     ).all()
+
+    db.session.close()
+
+    return render_template('dc_paciente.html', results=result, inicio=inicio)
+
+
+@inicio.route('/inicio_especialista/<id>', methods=['GET', 'POST'])
+def inicioEsp(id):
+     
+    PersonaP = aliased(Persona) # represents 'Paciente'
+    PersonaE = aliased(Persona) # represents 'Especialista'
+
+    inicio = Persona.query.get(id)
+
+    date = datetime.now()
+    formatted_date = date.strftime("%b. %d")
+
+    # Realizar la consulta
+    resultados = db.session.query(PersonaP.nombre, PersonaP.apellido, PersonaP.fecha_nac)\
+    .join(PersonaE, PersonaP.id_espe == PersonaE.id_persona)\
+    .filter(and_(PersonaP.id_espe == PersonaE.id_persona, PersonaE.id_persona == inicio.id_persona))\
+    .all()
+
+    db.session.close()
+
+    hoy = datetime.today()
+
+    return render_template('ini_especialista.html', inicio=inicio, formatted_date=formatted_date, resultados=resultados, today=hoy)
+
+
+# FIXME: Falta desarrollar esto
+@inicio.route('/detalle_comida/<id>')
+def detallePac(id):    
+
+    inicio = Persona.query.get(id)
+
+    db.session.close()
 
     return render_template('dc_paciente.html', results=result, inicio=inicio)
