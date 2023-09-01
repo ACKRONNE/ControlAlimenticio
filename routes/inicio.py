@@ -77,24 +77,34 @@ def inicioEsp(id):
     formatted_date = date.strftime("%b. %d")
 
     # Realizar la consulta
-    resultados = db.session.query(PersonaP.nombre, PersonaP.apellido, PersonaP.fecha_nac)\
+    resultados = db.session.query(PersonaP.id_persona, PersonaP.nombre, PersonaP.apellido, PersonaP.fecha_nac)\
     .join(PersonaE, PersonaP.id_espe == PersonaE.id_persona)\
     .filter(and_(PersonaP.id_espe == PersonaE.id_persona, PersonaE.id_persona == inicio.id_persona))\
     .all()
 
     db.session.close()
 
-    hoy = datetime.today()
-
-    return render_template('ini_especialista.html', inicio=inicio, formatted_date=formatted_date, resultados=resultados, today=hoy)
+    return render_template('ini_especialista.html', inicio=inicio, formatted_date=formatted_date, resultados=resultados, today=datetime.today())
 
 
 # FIXME: Falta desarrollar esto
-@inicio.route('/detalle_comida/<id>')
-def detallePac(id):    
+@inicio.route('/detalle_comida/<id>/<paciente>')
+def detallePac(id, paciente):    
 
-    inicio = Persona.query.get(id)
+    PersonaP = aliased(Persona)
+    PersonaE = aliased(Persona)
+
+    # id del especialista
+    get_esp = Persona.query.get(id)
+
+    # id del paciente
+    get_pac = Persona.query.get(paciente)
+
+    result = db.session.query(PersonaP).join(PersonaE, PersonaP.id_espe == PersonaE.id_persona)\
+        .filter(PersonaE.id_persona == 7, PersonaP.id_persona == 6)\
+        .with_entities(PersonaP.nombre, PersonaP.apellido, PersonaP.correo, PersonaP.telefono, PersonaP.fecha_nac, PersonaP.sexo)\
+        .first()
 
     db.session.close()
 
-    return render_template('dc_paciente.html', results=result, inicio=inicio)
+    return render_template('dp_especialista.html', get_esp=get_esp, result=result, get_pac=get_pac, today = datetime.today())

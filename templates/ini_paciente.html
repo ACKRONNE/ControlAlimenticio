@@ -6,6 +6,7 @@
     <title>Inicio Paciente</title>
 </head>
 <body>
+    
     <h1>Mis comidas</h1>
     <h3>{{ formatted_date }}</h3>
     <a href="{{ url_for('perfil.perfilPac', id=inicio.id_persona)}}">Perfil</a>
@@ -21,7 +22,24 @@
     <ul>
         {{ formatted_fecha }}
         {% for comida in resultados %}
-          <li>{{ comida.tipo }} <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">></a> <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">update</a> <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">delete</a></li>
+          <li>
+            {% if comida.tipo == "d" %}
+                <span>Desayuno</span>
+            {% endif %}
+            {% if comida.tipo == "a" %}
+                <span>Almuerzo</span>
+            {% endif %}
+            {% if comida.tipo == "c" %}
+                <span>Cena</span>
+            {% endif %}
+            {% if comida.tipo == "m" %}
+                <span>Merienda</span>
+            {% endif %}
+
+            <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">></a> 
+            <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">update</a> 
+            <a href="{{ url_for('inicio.detalleCom', id=inicio.id_persona) }}">delete</a>
+        </li>
         {% endfor %}
     </ul>
     <!-- // -->

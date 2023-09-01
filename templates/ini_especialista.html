@@ -15,8 +15,14 @@
     <!-- Lista de pacientes -->
     <ul>
         {% for resultado in resultados %}
+        <!-- Funcion para calcular la edad -->
         {% set edad = (today.year - resultado.fecha_nac.year - ((today.month, today.day) < (resultado.fecha_nac.month, resultado.fecha_nac.day))) %}
-        <p>{{ resultado.nombre }} {{ resultado.apellido }} {{ edad }} <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">></a> <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona) }}">delete</a></li></p>
+        <!-- -- -->
+        <p>{{ resultado.nombre }} {{ resultado.apellido }} {{ edad }} años {{resultado.id_persona}} <- borrar 
+            <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona, paciente=resultado.id_persona) }}">></a>
+            <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona, paciente=resultado.id_persona) }}">update</a> 
+            <a href="{{ url_for('inicio.detallePac', id=inicio.id_persona, paciente=resultado.id_persona) }}">delete</a>
+        </p>
         {% endfor %}
     </ul>
     <!-- // -->
