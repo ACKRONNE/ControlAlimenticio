@@ -47,8 +47,6 @@ def detalleCom(id):
         Comida.tipo,
         Alimento.nombre,
         Alimento.cantidad,
-        Comida.satisfaccion,
-        Comida.comentario
     ).filter(
         and_(
             Comida.id_comida == AR.id_comida,
@@ -60,9 +58,22 @@ def detalleCom(id):
         )
     ).all()
 
+    opinion = db.session.query(
+        Comida.satisfaccion,
+        Comida.comentario,
+        ).filter(
+            and_(Comida.id_comida == AR.id_comida,
+            Comida.id_persona == AR.id_persona,
+            Alimento.id_alimento == AR.id_alimento,
+            Comida.id_persona == 6,
+            HistComida.fecha_ini == '2023-03-15',
+            Comida.tipo == 'd'
+            )
+        ).first()
+
     db.session.close()
 
-    return render_template('dc_paciente.html', results=result, inicio=inicio)
+    return render_template('dc_paciente.html', results=result, inicio=inicio, opinion=opinion)
 
 
 @inicio.route('/inicio_especialista/<id>', methods=['GET', 'POST'])
