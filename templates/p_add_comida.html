@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+
+{% block title %}Agregar Comida{% endblock %}
+
+{% block body %}
+  
+  <a href="{{ url_for('paciente.inicio', id=get_pac.id_paciente) }}">Volver</a>
+  <h1>Agregar Comida</h1>
+
+  <form action="{{ url_for('paciente.addFood', id=get_pac.id_paciente) }}" method="POST" class="form-control">
+    
+    <div class="form-group">
+        <label>Especialistas</label>
+        <select name="id-espe">
+            <option value="">Selecciona el nombre</option>
+            {% for espe in get_esp %}
+                <option value="{{ espe.id_espe }}">{{ espe.pri_nombre }} {{ espe.pri_apellido }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+      <div required>
+      <label><input type="radio" name="tipo-comida" value="D">Desayuno</label><br>
+      <label><input type="radio" name="tipo-comida" value="A">Almuerzo</label><br>
+      <label><input type="radio" name="tipo-comida" value="C">Cena</label><br>
+      <label><input type="radio" name="tipo-comida" value="M">Merienda</label><br>
+      </div>
+    </div>
+
+    <!-- Alimentos -->
+    <div class="alimentos" id="alimentos">
+        <div class="row group">
+            <div class="column">
+                <div class="form-group">
+                    <label>Alimento</label>
+                    <select id="alimentos-select" name="alimentos[]">
+                        <option value="">Selecciona el nombre</option>
+                        {% for alimento in get_ali %}
+                            <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="add-alimento">Agregar otro Alimento</button>
+                </div>
+            </div>
+        </div>
+        <ul id="selected-alimentos">
+            {% for alimento in selected_alimentos %}
+                <li data-id="{{ alimento.id_alimento }}">
+                    {{ alimento.nombre }}
+                    <input type="hidden" name="alimentos[]" value="{{ alimento.id_alimento }}">
+                    <button type="button" class="remove-alimento">Eliminar</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- // -->
+
+    <h2>¿Como te sientes?</h2>
+    <div class="form-group">
+        <div>
+            <label><input type="radio" name="satisfaccion" value="Super"> Super</label><br>
+            <label><input type="radio" name="satisfaccion" value="Bien"> Bien</label><br>
+            <label><input type="radio" name="satisfaccion" value="Normal"> Normal</label><br>
+            <label><input type="radio" name="satisfaccion" value="No muy bien"> No muy bien</label><br>
+            <label><input type="radio" name="satisfaccion" value="Nal"> Mal</label><br>
+            <label><input type="radio" name="satisfaccion" value="Cansado"> Cansado</label><br>
+        </div>
+    </div>
+
+    <h2>Comentario</h2>
+    <div>
+        <textarea id="comentario" name="comentario"></textarea>
+    </div>
+    
+    <div class="form-group">
+        <h2>Fecha</h2>
+        <input type="datetime-local" id="fecha-ini" name="fecha-ini" required>
+    </div>
+
+    <div class="button-container">
+      <button class="submit-btn" type="submit">Agregar Comida</button>
+    </div>
+  </form>
+
+<!-- ZONA DE SCRIPTS -->
+<script>
+
+// Para que funcione la entrada multiple de datos en alimento
+document.getElementById('add-alimento').addEventListener('click', function() {
+    var select = document.getElementById('alimentos-select');
+    var selectedValue = select.value;
+    var selectedText = select.options[select.selectedIndex].text;
+
+    if (selectedValue) {
+        var ul = document.getElementById('selected-alimentos');
+        var li = document.createElement('li');
+        li.setAttribute('data-id', selectedValue);
+        li.innerHTML = selectedText + ' <input type="hidden" name="alimentos[]" value="' + selectedValue + '"> <button type="button" class="remove-alimento">Eliminar</button>';
+        ul.appendChild(li);
+
+        select.value = '';
+    } else {
+        alert("Por favor selecciona un alimento válido.");
+    }
+});
+
+document.getElementById('selected-alimentos').addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-alimento')) {
+        var li = e.target.parentElement;
+        li.parentElement.removeChild(li);
+    }
+});
+// // 
+
+</script>
+<!-- // SCRIPTS -->
+{% endblock body %}

@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% block title %}Modificar Comida{% endblock %}
+
+{% block body %}
+
+<a href="{{ url_for('paciente.inicio', id=get_pac.id_paciente) }}">Volver</a>
+  <h1>Editar Receta</h1>
+
+<form action="{{ url_for('paciente.updateFood', id=get_pac.id_paciente, date=date) }}" method="POST" class="form-control">
+    
+    <div class="form-group">
+        <label>Fecha</label>
+        {{ date_formatted }}
+    </div>
+
+    <div class="form-group">
+        <label>Tipo de Comida</label>
+        <div required>
+        <label><input type="radio" name="tipo-comida" value="D" {% if datos[0].tipo == "D" %} checked {% endif %}>Desayuno</label></input><br>
+        <label><input type="radio" name="tipo-comida" value="A" {% if datos[0].tipo == "A" %} checked {% endif %}>Almuerzo</label></input><br>
+        <label><input type="radio" name="tipo-comida" value="C" {% if datos[0].tipo == "C" %} checked {% endif %}>Cena</label></input><br>
+        <label><input type="radio" name="tipo-comida" value="M" {% if datos[0].tipo == "M" %} checked {% endif %}>Merienda</label></input><br>
+        </div>
+    </div>
+
+    <!-- Alimentos -->
+    <div class="alimentos" id="alimentos">
+        <div class="row group">
+            <div class="column">
+                <div class="form-group">
+                    <label>Alimento</label>
+                    <select id="alimentos-select" name="alimentos[]">
+                        <option value="">Selecciona el nombre</option>
+                        {% for alimento in get_ali %}
+                            <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="add-alimento">Agregar otro Alimento</button>
+                </div>
+            </div>
+        </div>
+        <ul id="selected-alimentos">
+            {% for alimento in datos %}
+                <li data-id="{{ alimento.id_alimento }}">
+                    {{ alimento.nombre }}
+                    <input type="hidden" name="alimentos[]" value="{{ alimento.id_alimento }}">
+                    <button type="button" class="remove-alimento">Eliminar</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- // -->
+
+    <label for="satisfaccion">Satisfacción</label>
+    <input type="text" id="satisfaccion" name="satisfaccion" value="{{ datos[0].satisfaccion if datos else '' }}" required><br>
+
+    <label for="comentario">Comentario</label>
+    <textarea id="comentario" name="comentario" required>{{ datos[0].comentario if datos else '' }}</textarea><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+
+<!-- ZONA DE SCRIPTS -->
+<script>
+
+// Para que funcione la entrada multiple de datos en alimento
+document.getElementById('add-alimento').addEventListener('click', function() {
+    var select = document.querySelector('select');
+    var selectedOption = select.options[select.selectedIndex];
+    var selectedAlimentos = document.getElementById('selected-alimentos');
+    var exists = false;
+
+    selectedAlimentos.querySelectorAll('li').forEach(function(li) {
+        if (li.getAttribute('data-id') === selectedOption.value) {
+            exists = true;
+        }
+    });
+
+    if (!exists) {
+        var li = document.createElement('li');
+        li.setAttribute('data-id', selectedOption.value);
+        li.innerHTML = selectedOption.text + 
+            '<input type="hidden" name="alimentos[]" value="' + selectedOption.value + '">' +
+            '<button type="button" class="remove-alimento">Eliminar</button>';
+        selectedAlimentos.appendChild(li);
+    } else {
+        alert('El alimento ya ha sido agregado.');
+    }
+});
+
+document.getElementById('selected-alimentos').addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-alimento')) {
+        var li = e.target.parentElement;
+        var alimentoId = li.getAttribute('data-id');
+        var date = "{{ date }}";
+        var pacienteId = "{{ get_pac.id_paciente }}";
+
+        console.log('Alimento ID:', alimentoId);
+        console.log('Date:', date);
+        console.log('Paciente ID:', pacienteId);
+
+        if (!alimentoId) {
+            alert("Error: Alimento ID is missing.");
+            return;
+        }
+
+        fetch(`/eliminar_alimento/${alimentoId}/${date}/${pacienteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                li.parentElement.removeChild(li);
+                alert("Alimento eliminado con éxito.");
+            } else {
+                alert("Error al eliminar el alimento.");
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert("Error al eliminar el alimento.");
+        });
+    }
+});
+// // 
+
+</script>
+<!-- // SCRIPTS -->
+
+{% endblock %}

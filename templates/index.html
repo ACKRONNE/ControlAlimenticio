@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Page Tile -->
-    <title>Inicio</title>
 
-    <!-- Browser tab icon -->
-    <link rel="shortcut icon" type="x-icon" href="static\images\Logo.png">
+{% extends 'layout.html' %}
 
-</head>
-<body>
-    <!-- Fundation Logo -->
-    <img src="static\images\Logo.png" alt="Imagen relacionada" width="100">
+{% block title %}Inicio{% endblock %}
 
-    <!-- Text Area -->
+{% block body %}
+  <!-- Text Area -->
     <h1>Bienvenido</h1>
     <h4>Descubre un camino hacia una alimentación saludable y equilibrada. Aprende a nutrir tu cuerpo de manera consciente, alcanza un bienestar integral</h4>
 
     <!-- Buttons -->
-    <a href="{{ url_for('log.login') }}">login</a>
-    <a href="{{ url_for('registro.registroUsuario') }}">Registrarse</a>
-</body>
-</html>
+    <a href="{{ url_for('index.login') }}">Iniciar Sesion</a>
+    <a href="{{ url_for('index.registro') }}">Registrarse</a>
+
+{% endblock %}

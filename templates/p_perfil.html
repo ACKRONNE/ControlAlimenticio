@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block title %}Perfil Paciente{% endblock %}
+
+{% block body %}
+
+    <a href="{{ url_for('paciente.inicio', id=paciente.id_paciente) }}">Volver</a>
+
+        <p>Nombre {{paciente.pri_nombre}} {{paciente.seg_nombre}}</p>
+        <p>Apellidos {{paciente.pri_apellido}} {{paciente.seg_apellido}}</p>
+        <p>Sexo 
+            {% if paciente.sexo == "F" %}
+            Femenino
+            {% elif paciente.sexo == "M" %}
+                Masculino
+            {% elif paciente.sexo == "O" %}
+                Otro
+            {% endif %}
+        </p>
+        <p>Correo {{paciente.correo}}</p> 
+        <p>Telefono {{paciente.telefono}}</p> 
+        <p id="edad">Edad </p>
+        <p>Clave *******</p> 
+
+
+        <a href="{{ url_for('paciente.updateProfile', id=paciente.id_paciente) }}">Editar Perfil</a>
+        <form action="{{ url_for('paciente.deleteAccount', id=paciente.id_paciente) }}" method="post">
+            <input type="submit" value="Eliminar Cuenta">
+        </form>
+        <a href="{{ url_for('index.logout', id=paciente.id_paciente) }}">Cerrar Sesion</a>
+
+        <script>
+            const fechaNacimiento = "{{ paciente.fecha_nacimiento }}";
+    
+            function calcularEdad(fecha) {
+                const hoy = new Date();
+                const nacimiento = new Date(fecha);
+                let edad = hoy.getFullYear() - nacimiento.getFullYear();
+                const mes = hoy.getMonth() - nacimiento.getMonth();
+                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+                    edad--;
+                }
+                return edad;
+            }
+    
+            const edad = calcularEdad(fechaNacimiento);
+            document.getElementById('edad').textContent = `Edad: ${edad}`;
+        </script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalle Especialista{% endblock %}
+
+{% block body %}
+
+<!-- Static title -->
+<a href="{{ url_for('paciente.especialistas', id=paciente.id_paciente) }}">Volver</a>
+<a href="{{ url_for('paciente.perfil', id=paciente.id_paciente) }}">Perfil</a>
+<h1>Especialistas</h1>
+<!-- // -->
+
+<h1>{{especialista.pri_nombre}} {{especialista.pri_apellido}}</h1>
+<div>Correo: {{especialista.correo}}</div>
+<div>Telefono: {{especialista.telefono}}</div>
+<div>Especialidad: {{especialista.especialidad}}</div>
+
+<h2>Recetas</h2>
+<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='D') }}">Desayunos</a>
+<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='A') }}">Almuerzos</a>
+<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='C') }}">Cenas</a>
+<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='M') }}">Meriendas</a>
+
+<!-- Lista de comidas filtradas -->
+<h2>Comidas Designadas</h2>
+  {% if comidas %}
+<ul>
+    {% for comida in comidas %}
+    <li>
+        {{ comida.fecha_ini }} - {{ comida.nombre }} ({{ 'Desayuno' if comida.tipo == 'D' else 'Almuerzo' if comida.tipo == 'A' else 'Cena' if comida.tipo == 'C' else 'Merienda' if comida.tipo == 'M' else 'Desconocido' }})
+        <ul>
+            {% for alimento in comida.alimentos %}
+            <li>{{ alimento.nombre }} - {{ alimento.cantidad }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+  {% else %}
+<p>No hay comidas para mostrar.</p>
+  {% endif %}
+
+{% endblock %}

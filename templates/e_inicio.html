@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}Inicio Especialista{% endblock %}
+
+{% block body %}
+
+<a href="{{ url_for('especialista.receipeList', id=get_esp.id_espe) }}">Lista de Recetas</a>
+
+<h1>Especialista</h1>
+<h1>Bienvenido de Nuevo</h1>
+<span>{{get_esp.pri_nombre}} {{get_esp.pri_apellido}}</span>
+<!-- // -->
+
+<h2>---------------------------</h2>
+<h2>Mis Pacientes</h2>
+<h3>{{ formatted_date }}</h3>
+
+<a href="{{ url_for('especialista.perfil', id=get_esp.id_espe)}}">Perfil</a>
+
+<!-- Resultados de busqueda -->
+<ul>
+    {{ date }}
+    {% for paciente in get_pac %}
+      <li>
+        <span>{{paciente.pri_nombre}}</span>
+        <span>{{paciente.pri_apellido}}</span>
+
+        <a href="{{ url_for('especialista.detallePaciente', id_espe=get_esp.id_espe, id_pac=paciente.id_paciente )}}">></a>
+
+    </li>
+    {% endfor %}
+</ul>
+<!-- // -->
+ 
+{% endblock %}

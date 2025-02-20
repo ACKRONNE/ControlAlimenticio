@@ -1,46 +1,37 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from utils.db import db
+from src.database.db import db
+from sqlalchemy import create_engine
 
-from models.alimento import Alimento
-from models.ar import AR
-from models.comida import Comida
-from models.hist_comida import HistComida
-from models.persona import Persona
+# Objetos de las rutas
+from src.routes.index import ind
+from src.routes.paciente import pac
+from src.routes.especialista import esp
 
-from routes.login import log
-from routes.registro import registro
-from routes.perfil import perfil
-from routes.eliminar_cuenta import delUsr
-from routes.inicio import inicio
-from routes.update_cuenta import updtUsr
-from routes.password_recovery import password
-from routes.comida import comida
-
+# Librerias para el funcionamiento
 from dotenv import load_dotenv
 import os
+# //
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# settings
+# Settings de la DB
 key = os.environ['SECRETKEY']
-config = os.environ['MYSQLCONFIG']
+config = os.environ['POSTGRESCONFIG']
 
 app.secret_key = key
 app.config['SQLALCHEMY_DATABASE_URI'] = config
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# //
+
+engine = create_engine(config)
+db.metadata.create_all(engine)
 
 # inicializar la aplicacion con la base de datos
 db.init_app(app)
+# //
 
-app.register_blueprint(log)
-app.register_blueprint(registro)
-app.register_blueprint(perfil)
-app.register_blueprint(delUsr)
-app.register_blueprint(inicio)
-app.register_blueprint(updtUsr)
-app.register_blueprint(password)
-app.register_blueprint(comida)
-
+app.register_blueprint(ind)
+app.register_blueprint(pac)
+app.register_blueprint(esp)

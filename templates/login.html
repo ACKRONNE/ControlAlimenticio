@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
-    <title>Inicio de Sesion</title>
-</head>
+{% extends 'layout.html' %}
 
-<body>
+{% block title %}Inicio de Sesion{% endblock %}
 
-  <!-- Static title -->
-  <a href="{{ url_for('log.index') }}">Volver</a>
-  <h1>Es un gusto tenerte de nuevo</h1>
-  <!-- // -->
+{% block body %}
 
-  <!-- Form -->
-  <div>
-    <form action="/login" method="POST">
-        <h2>Por favor ingresa tus datos</h2>
+    <!-- Static title -->
+    <a href="{{ url_for('index.index') }}">Volver</a>
+    <h1>Es un gusto tenerte de nuevo</h1>
+    <!-- // -->
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" placeholder="Enter email" name="txt-correo">
-        </div>
+    <!-- Form -->
+    <div>
+        <form action="{{ url_for('index.login') }}" method="POST">
+            <h2>Por favor ingresa tus datos</h2>
 
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" placeholder="Password" name="txt-contraseña">
-        </div>
+            <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" placeholder="Enter email" name="ind-correo">
+            </div>
 
-        <a href="{{ url_for('password.recovery') }}"><small id="emailHelp" class="form-text text-muted">¿Olvidó su Contraseña?</small></a>
-        <small>¿No tienes una cuenta? <a href="{{ url_for('registro.registroUsuario') }}">Registrese</a></small>
-        
-        <button type="submit">Iniciar Sesion</button>
-      </form>
-  </div>
-<!-- // -->
+            <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" placeholder="Password" name="ind-clave">
+            </div>
 
+            <a href="/#"><small id="emailHelp" class="form-text text-muted">¿Olvidó su Contraseña?</small></a>
+            <small>¿No tienes una cuenta? <a href="{{ url_for('index.registro') }}">Registrese</a></small>
+            
+            <button type="submit">Iniciar Sesion</button>
+        </form>
+    </div>
+    <!-- // -->
 
-</body>
-
-</html>
+{% endblock %}
