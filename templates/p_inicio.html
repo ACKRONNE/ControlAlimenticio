@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<a href="{{url_for('paciente.especialistas', id=get_pac.id_paciente)}}">Especialistas</a> 
+<a href="{{url_for('paciente.especialistas', id=get_pac.id_paciente)}}">Especialistas</a>
 <a href="{{url_for('paciente.addFood', id=get_pac.id_paciente)}}">Agregar Comida</a>
 
 <!-- data from the person -->
@@ -21,35 +21,32 @@
 
 <!-- Barra de buscador -->
 <form action="{{url_for('paciente.inicio', id=get_pac.id_paciente)}}" method="POST">
-        <input type="text" placeholder="Agust, 23 2023" name="pac-fecha" required>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+    <input type="text" placeholder="Agust, 23 2023" name="pac-fecha" required>
+    <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
 <!-- // -->
-
 <!-- Resultados de busqueda -->
 <ul>
-    {{ date }}
     {% for comida in tipo %}
-      <li>
+        <span>{{ comida.fecha_ini.strftime('%d, %B %Y') }}</span>
+    <li>
         {% if comida.tipo == "D" %}
-            <span>Desayuno</span>
+        <span>Desayuno</span>
         {% endif %}
         {% if comida.tipo == "A" %}
-            <span>Almuerzo</span>
+        <span>Almuerzo</span>
         {% endif %}
         {% if comida.tipo == "C" %}
-            <span>Cena</span>
+        <span>Cena</span>
         {% endif %}
         {% if comida.tipo == "M" %}
-            <span>Merienda</span>
+        <span>Merienda</span>
         {% endif %}
-
-        <a href="{{ url_for('paciente.foodDetail', id=get_pac.id_paciente, date=comida.fecha_ini) }}">></a> 
-        <a href="{{ url_for('paciente.updateFood', id=get_pac.id_paciente, date=comida.fecha_ini) }}">update</a> 
+        <a href="{{ url_for('paciente.foodDetail', id=get_pac.id_paciente, date=comida.fecha_ini) }}">></a>
+        <a href="{{ url_for('paciente.updateFood', id=get_pac.id_paciente, date=comida.fecha_ini) }}">update</a>
         <a href="{{ url_for('paciente.deleteFood', id=get_pac.id_paciente, date=comida.fecha_ini) }}">delete</a>
     </li>
     {% endfor %}
 </ul>
 <!-- // -->
- 
 {% endblock %}

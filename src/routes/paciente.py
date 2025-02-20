@@ -69,33 +69,25 @@ def inicio(id):
         return redirect(url_for('index.index')) 
     # //
 
-    # Consulta de las comidas del paciente
-    tipo = (
-        db.session.query(Comida.tipo, Comida.fecha_ini)
-        .filter(Comida.id_paciente == id)
-        .filter(Comida.comentario != None)
-    ).all()
-    # //
-
     # Fecha Actual
     date = datetime.now()
-    formatted_date = date.strftime("%b. %d")
+    formatted_date = date.strftime("%d, %B %Y")
     # //
-    
-    if request.method == "POST":
 
+    if request.method == "POST":
         # Extraigo la fecha del buscador
         fecha_str = request.form['pac-fecha']
         fecha = datetime.strptime(fecha_str, '%Y-%m-%d')
         # //
 
-        date = fecha.strftime('%B, %d %Y') # Formateo de la fecha de la consulta
+        date = fecha.strftime('%d, %B %Y') # Formateo de la fecha de la consulta
 
-        # Consulta de las comidas del paciente
+        # Consulta de las comidas del paciente para la fecha especificada
         tipo = (
             db.session.query(Comida.tipo, Comida.fecha_ini)
             .filter(cast(Comida.fecha_ini, Date) == fecha.date())
             .filter(Comida.id_paciente == id)
+            .order_by(Comida.fecha_ini)
         ).all()
         # //
 
@@ -103,7 +95,16 @@ def inicio(id):
         
         return render_template('p_inicio.html', get_pac=get_pac, formatted_date=formatted_date, date=date, tipo=tipo, fecha=fecha)
 
-    return render_template("p_inicio.html", get_pac=get_pac, formatted_date=formatted_date)
+    # Consulta de las comidas del paciente para la fecha actual
+    tipo = (
+        db.session.query(Comida.tipo, Comida.fecha_ini)
+        .filter(Comida.id_paciente == id)
+        .filter(Comida.comentario != None)
+        .order_by(Comida.fecha_ini)
+    ).all()
+    # //
+
+    return render_template("p_inicio.html", get_pac=get_pac, formatted_date=formatted_date, date=formatted_date, tipo=tipo)
 # // >
 
 # Perfil <
