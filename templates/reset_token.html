@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block body %}
+<h1>Reset Password</h1>
+<form action="{{ url_for('index.reset_token', token=token) }}" method="POST">
+    <label for="password">New Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter your new password" required>
+    <button type="submit">Reset Password</button>
+</form>
+{% endblock %}
