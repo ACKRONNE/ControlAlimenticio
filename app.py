@@ -37,7 +37,6 @@ app.register_blueprint(ind)
 app.register_blueprint(pac)
 app.register_blueprint(esp)
 
-
 mail = os.environ['MAIL_USERNAME']
 password = os.environ['MAIL_PASSWORD']
 default_sender = os.environ['MAIL_DEFAULT_SENDER']
