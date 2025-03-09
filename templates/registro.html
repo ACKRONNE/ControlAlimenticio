@@ -3,14 +3,110 @@
 {% block title %}Tipo Usuario{% endblock %}
 
 {% block body %}
-  <!-- Text Area -->
-    <a href="{{ url_for('index.index') }}">Volver</a>
-    <h1>Registro</h1>
+    <body class="bg-gradient-primary">
+      <div class="container">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+              <div class="card-body p-0">
+                  <div class="row">
+                      <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                      <div class="col-lg-7">
+                          <div class="p-5">
+                              <div class="text-center">
+                                  <h1 class="h4 text-gray-900 mb-4">Registrate!</h1>
+                              </div>
+                              <!-- Cambiar esto a general -->
+                              <form class="user" action="{{ url_for('paciente.registro') }}" method="POST">
+                                  <div class="form-group row">
+                                      <div class="col-sm-6 mb-3 mb-sm-0">
+                                          <input type="text" class="form-control form-control-user" name="pac-pri-nombre"
+                                              placeholder="Primer Nombre">
+                                      </div>
+                                      <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="pac-seg-nombre"
+                                            placeholder="Segundo Nombre">
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control form-control-user" name="pac-pri-apellido"
+                                          placeholder="Primer Apellido">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="pac-seg-apellido"
+                                            placeholder="Segundo Apellido">
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <input type="email" class="form-control form-control-user" name="pac-correo"
+                                          placeholder="Correo Electronico">
+                                  </div>
 
-    <h1>Soy un</h1>
+                                  <div class="form-group">
+                                    <label>Género</label>
+                                    <div requiere>
+                                    <label><input type="radio" name="pac-sexo" value="M">Hombre</label><br>
+                                    <label><input type="radio" name="pac-sexo" value="F">Mujer</label><br>
+                                    <label><input type="radio" name="pac-sexo" value="O">Prefiero no decirlo</label><br>
+                                    </div>
+                                  </div>
 
-    <!-- Buttons -->
-    <a href="{{ url_for('paciente.registro') }}">paciente</a>
-    <a href="{{ url_for('especialista.registro') }}">especialista</a>
+                                  <div class="form-group">
+                                    <label>Tipo</label>
+                                    <div requiere>
+                                    <label><input type="radio" name="pac-tipo" value="M">Especialista</label><br>
+                                    <label><input type="radio" name="pac-tipo" value="F">Paciente</label><br>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                  <div class="col-sm-6">
+                                    <input type="number" class="form-control form-control-user" name="pac-telefono"
+                                        placeholder="Numero de Telefono">
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <input type="date" class="form-control form-control-user" name="pac-fecha-nacimiento"
+                                        placeholder="Fecha de nacimiento">
+                                  </div>
+                                </div>
+
+                                  <!-- Agregar validacion para comprobar las 2 contraseñas -->
+                                  <div class="form-group row"> 
+                                      <div class="col-sm-6 mb-3 mb-sm-0">
+                                          <input type="password" class="form-control form-control-user"
+                                              name="exampleInputPassword" placeholder="Contraseña">
+                                      </div>
+                                      <div class="col-sm-6">
+                                          <input type="password" class="form-control form-control-user"
+                                              name="exampleRepeatPassword" placeholder="Repite la Contraseña">
+                                      </div>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary btn-user btn-block">
+                                      Registrar Cuenta
+                                  </button>
+                                  <hr>
+                              </form>
+                              <div class="text-center">
+                                  <a class="small" href="{{ url_for('index.login') }}">Already have an account? Login!</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+      <!-- Bootstrap core JavaScript-->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+      <!-- Core plugin JavaScript-->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  
+      <!-- Custom scripts for all pages-->
+      <script src="js/sb-admin-2.min.js"></script>
+  
+  </body>
+
 
 {% endblock %}
