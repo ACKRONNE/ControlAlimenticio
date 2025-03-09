@@ -4,115 +4,294 @@
 
 {% block body %}
   
-  <a href="{{ url_for('paciente.inicio', id=get_pac.id_paciente) }}">Volver</a>
-  <h1>Agregar Comida</h1>
+  <body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('paciente.inicio', id=get_pac.id_paciente)}}">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+            </a>
 
-  <form action="{{ url_for('paciente.addFood', id=get_pac.id_paciente) }}" method="POST" class="form-control">
-    
-    <div class="form-group">
-        <label>Especialistas</label>
-        <select name="id-espe">
-            <option value="">Selecciona el nombre</option>
-            {% for espe in get_esp %}
-                <option value="{{ espe.id_espe }}">{{ espe.pri_nombre }} {{ espe.pri_apellido }}</option>
-            {% endfor %}
-        </select>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('paciente.inicio', id=get_pac.id_paciente)}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Vista Principal</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Utilidades
+            </div>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('paciente.addFood', id=get_pac.id_paciente)}}">
+                    <i class="fas fa-fw fa-utensils"></i>
+                    <span>Agregar Comidas</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('paciente.especialistas', id=get_pac.id_paciente)}}">
+                    <i class="fas fa-fw fa-stethoscope"></i>
+                    <span>Especialistas</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{get_pac.pri_nombre}} {{get_pac.pri_apellido}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ url_for('static', filename='img/undraw_profile.svg') }}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ url_for('paciente.perfil', id=get_pac.id_paciente)}}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar Sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <div class="col-lg-12">
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Agregar Comida</h6>
+                      </div>
+                      <div class="card-body">
+                        
+                        <!-- Quitar "form-control" de aquí -->
+                        <form action="{{ url_for('paciente.addFood', id=get_pac.id_paciente) }}" method="POST">
+                          
+                          <!-- Cada campo con su .form-group y los controles con .form-control -->
+                          <div class="form-group">
+                            <label>Especialistas</label>
+                            <select name="id-espe" class="form-control">
+                              <option value="">Selecciona el nombre</option>
+                              {% for espe in get_esp %}
+                                <option value="{{ espe.id_espe }}">{{ espe.pri_nombre }} {{ espe.pri_apellido }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                  
+                          <div class="form-group">
+                            <label>Tipo de Comida</label>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="tipo-comida" value="D">
+                              <label class="form-check-label">Desayuno</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo-comida" value="A">
+                                <label class="form-check-label">Almuerzo</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo-comida" value="C">
+                                <label class="form-check-label">Cena</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipo-comida" value="M">
+                                <label class="form-check-label">Merienda</label>
+                            </div>
+                            <!-- Repite con tus otros radios -->
+                          </div>
+                  
+                          <div class="form-group">
+                            <label>Alimentos</label>
+                            <div class="input-group mb-3">
+                              <select id="alimentos-select" name="alimentos[]" class="form-control">
+                                <option value="">Selecciona el nombre</option>
+                                {% for alimento in get_ali %}
+                                  <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
+                                {% endfor %}
+                              </select>
+                              <div class="input-group-append">
+                                <button type="button" id="add-alimento" class="btn btn-primary">Agregar otro Alimento</button>
+                              </div>
+                            </div>
+                            <ul id="selected-alimentos" class="list-group">
+                              <!-- … -->
+                            </ul>
+                          </div>
+                  
+                          <div class="form-group">
+                            <label>¿Cómo te sientes?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="Super">
+                                <label class="form-check-label">Super</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="Bien">
+                                <label class="form-check-label">Bien</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="Normal">
+                                <label class="form-check-label">Normal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="No muy bien">
+                                <label class="form-check-label">No muy bien</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="Mal">
+                                <label class="form-check-label">Mal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="satisfaccion" value="Cansado">
+                                <label class="form-check-label">Cansado</label>
+                            </div>
+                          </div>
+                  
+                          <div class="form-group">
+                            <label>Comentario</label>
+                            <textarea id="comentario" name="comentario" class="form-control"></textarea>
+                          </div>
+                  
+                          <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="datetime-local" id="fecha-ini" name="fecha-ini" class="form-control" required>
+                          </div>
+                  
+                          <div class="form-group text-center">
+                            <button class="btn btn-primary" type="submit">Agregar Comida</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+                  
+                
+            </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; pösis corp 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
     </div>
+    <!-- End of Page Wrapper -->
 
-    <div class="form-group">
-      <div required>
-      <label><input type="radio" name="tipo-comida" value="D">Desayuno</label><br>
-      <label><input type="radio" name="tipo-comida" value="A">Almuerzo</label><br>
-      <label><input type="radio" name="tipo-comida" value="C">Cena</label><br>
-      <label><input type="radio" name="tipo-comida" value="M">Merienda</label><br>
-      </div>
-    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-    <!-- Alimentos -->
-    <div class="alimentos" id="alimentos">
-        <div class="row group">
-            <div class="column">
-                <div class="form-group">
-                    <label>Alimento</label>
-                    <select id="alimentos-select" name="alimentos[]">
-                        <option value="">Selecciona el nombre</option>
-                        {% for alimento in get_ali %}
-                            <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="button" id="add-alimento">Agregar otro Alimento</button>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para irte?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" abajo si estas listo para cerrar tu sesion actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
                 </div>
             </div>
         </div>
-        <ul id="selected-alimentos">
-            {% for alimento in selected_alimentos %}
-                <li data-id="{{ alimento.id_alimento }}">
-                    {{ alimento.nombre }}
-                    <input type="hidden" name="alimentos[]" value="{{ alimento.id_alimento }}">
-                    <button type="button" class="remove-alimento">Eliminar</button>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <!-- // -->
-
-    <h2>¿Como te sientes?</h2>
-    <div class="form-group">
-        <div>
-            <label><input type="radio" name="satisfaccion" value="Super"> Super</label><br>
-            <label><input type="radio" name="satisfaccion" value="Bien"> Bien</label><br>
-            <label><input type="radio" name="satisfaccion" value="Normal"> Normal</label><br>
-            <label><input type="radio" name="satisfaccion" value="No muy bien"> No muy bien</label><br>
-            <label><input type="radio" name="satisfaccion" value="Nal"> Mal</label><br>
-            <label><input type="radio" name="satisfaccion" value="Cansado"> Cansado</label><br>
-        </div>
     </div>
 
-    <h2>Comentario</h2>
-    <div>
-        <textarea id="comentario" name="comentario"></textarea>
-    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ url_for('static', filename='js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/demo/chart-pie-demo.js') }}"></script>
+
+    <!-- ZONA DE SCRIPTS -->
+    <script>
+
+    // Para que funcione la entrada multiple de datos en alimento
+    document.getElementById('add-alimento').addEventListener('click', function() {
+        var select = document.getElementById('alimentos-select');
+        var selectedValue = select.value;
+        var selectedText = select.options[select.selectedIndex].text;
     
-    <div class="form-group">
-        <h2>Fecha</h2>
-        <input type="datetime-local" id="fecha-ini" name="fecha-ini" required>
-    </div>
+        if (selectedValue) {
+            var ul = document.getElementById('selected-alimentos');
+            var li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.setAttribute('data-id', selectedValue);
+            li.innerHTML = selectedText + ' <input type="hidden" name="alimentos[]" value="' + selectedValue + '"> <button type="button" class="btn btn-danger btn-sm remove-alimento">Eliminar</button>';
+            ul.appendChild(li);
+    
+            select.value = '';
+        } else {
+            alert("Por favor selecciona un alimento válido.");
+        }
+    });
+    
+    document.getElementById('selected-alimentos').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-alimento')) {
+            var li = e.target.parentElement;
+            li.parentElement.removeChild(li);
+        }
+    });
+    // // 
+    
+    </script>
 
-    <div class="button-container">
-      <button class="submit-btn" type="submit">Agregar Comida</button>
-    </div>
-  </form>
+</body>
 
-<!-- ZONA DE SCRIPTS -->
-<script>
-
-// Para que funcione la entrada multiple de datos en alimento
-document.getElementById('add-alimento').addEventListener('click', function() {
-    var select = document.getElementById('alimentos-select');
-    var selectedValue = select.value;
-    var selectedText = select.options[select.selectedIndex].text;
-
-    if (selectedValue) {
-        var ul = document.getElementById('selected-alimentos');
-        var li = document.createElement('li');
-        li.setAttribute('data-id', selectedValue);
-        li.innerHTML = selectedText + ' <input type="hidden" name="alimentos[]" value="' + selectedValue + '"> <button type="button" class="remove-alimento">Eliminar</button>';
-        ul.appendChild(li);
-
-        select.value = '';
-    } else {
-        alert("Por favor selecciona un alimento válido.");
-    }
-});
-
-document.getElementById('selected-alimentos').addEventListener('click', function(e) {
-    if (e.target && e.target.classList.contains('remove-alimento')) {
-        var li = e.target.parentElement;
-        li.parentElement.removeChild(li);
-    }
-});
-// // 
-
-</script>
-<!-- // SCRIPTS -->
 {% endblock body %}
