@@ -432,7 +432,6 @@ def deleteFood(id, date):
 # Ver Especialistas <
 @pac.route('/ver_especialistas/<id>', methods=['GET'])
 def especialistas(id):
-    
     date = datetime.now()
     date = date.strftime("%b, %d %Y")
 
@@ -450,7 +449,10 @@ def especialistas(id):
         comida_alias.id_paciente == id
     ).distinct()
 
-    return render_template('p_ver_especialistas.html', id=id, result=result, date=date)
+    # Obtener el objeto get_pac
+    get_pac = db.session.query(Paciente).filter_by(id_paciente=id).first()
+
+    return render_template('p_ver_especialistas.html', id=id, result=result, date=date, get_pac=get_pac)
 # // >
 
 # Detalle especialistas <

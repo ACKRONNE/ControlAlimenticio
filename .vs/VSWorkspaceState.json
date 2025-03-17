@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\src",
+    "\\src\\routes",
     "\\templates"
   ],
-  "SelectedNode": "\\templates\\p_add_comida.html",
   "PreviewInSolutionExplorer": false
 }
