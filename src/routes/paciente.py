@@ -243,8 +243,9 @@ def addFood(id):
 # // >
 
 # Detalle de comida <
-@pac.route('/detalle_comida/<id>/<date>', methods=["GET"])
-def foodDetail(id, date):
+@pac.route('/detalle_comida/<id>', methods=["GET"])
+def foodDetail(id):
+    date = request.args.get('date')
     try:
         get_pac = db.session.query(Paciente.id_paciente).filter(Paciente.id_paciente == id).first()
     
@@ -268,7 +269,6 @@ def foodDetail(id, date):
             AC.fecha_ini == Comida.fecha_ini
         ).distinct().all()
 
-
         db.session.close()
 
         date_obj = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
@@ -280,7 +280,6 @@ def foodDetail(id, date):
         db.session.rollback()
         flash(f"Error en el Detalle de Comida: {e}")
         return render_template(url_for('paciente.inicio', id=id))
-# // >
 
 # Modificar Comida <
 @pac.route('/editar_comida/<id>/<date>', methods=['GET', 'POST'])
@@ -474,3 +473,40 @@ def detalleEspecialista(id, espe):
     db.session.close()
 
     return render_template('p_detalle_especialista.html', especialista=especialista, paciente=paciente, comidas=comidas, tipo_comida=tipo_comida)
+
+    @pac.route('/get_comida/<id>/<date>', methods=['GET'])
+    def get_comida(id, date):
+        try:
+            datos = db.session.query(
+                Alimento.nombre,
+                Alimento.cantidad,
+                Alimento.id_alimento,
+                Alimento.tipo.label('tipo_alimento'),
+                Comida.fecha_ini,
+                Comida.tipo,
+                Comida.satisfaccion,
+                Comida.comentario,
+                Especialista.pri_nombre,
+                Especialista.pri_apellido
+            ).select_from(Comida).\
+            join(AC, Comida.id_paciente == AC.id_paciente).\
+            join(Alimento, Alimento.id_alimento == AC.id_alimento).\
+            join(Especialista, Comida.id_espe == Especialista.id_espe).\
+            filter(
+                Comida.fecha_ini == date, 
+                Comida.id_paciente == id,
+                AC.fecha_ini == Comida.fecha_ini
+            ).distinct().all()
+
+            date_obj = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date_formatted = date_obj.strftime("%B, %d %Y a las %H:%M")
+
+            return jsonify({
+                'datos': [dato._asdict() for dato in datos],
+                'date_formatted': date_formatted
+            }), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'message': f'Error al obtener la comida: {e}'}), 500
+        finally:
+            db.session.close()

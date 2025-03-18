@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_ver_especialistas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:templates\\p_ver_especialistas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_especialista.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:templates\\p_detalle_especialista.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "paciente.py",
               "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py",
               "RelativeDocumentMoniker": "src\\routes\\paciente.py",
               "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py",
               "RelativeToolTip": "src\\routes\\paciente.py",
-              "ViewState": "AgIAAJUBAAAAAAAAAAAAALUBAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAMMBAAAAAAAAAAAAAMkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-03-17T22:25:24.406Z",
+              "WhenOpened": "2025-03-17T22:44:44.133Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "p_detalle_especialista.html",
+              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_especialista.html",
+              "RelativeDocumentMoniker": "templates\\p_detalle_especialista.html",
+              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_especialista.html",
+              "RelativeToolTip": "templates\\p_detalle_especialista.html",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-03-17T22:42:23.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "p_ver_especialistas.html",
               "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_ver_especialistas.html",
               "RelativeDocumentMoniker": "templates\\p_ver_especialistas.html",
               "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_ver_especialistas.html",
               "RelativeToolTip": "templates\\p_ver_especialistas.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAAAOYAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-03-17T22:24:37.937Z"
+              "WhenOpened": "2025-03-17T22:24:37.937Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -4,121 +4,109 @@
 
 {% block body %}
 
-<!-- Static title -->
-<a href="{{ url_for('paciente.inicio', id=get_pac.id_paciente) }}">Volver</a>
-<a href="{{ url_for('paciente.perfil', id=get_pac.id_paciente) }}">Perfil</a>
-<a href="{{ url_for('paciente.updateFood', id=get_pac.id_paciente, date=date) }}">Modificar</a>        
-  <h1>Detalle Comida</h1>
-  <!-- // -->
-
-        {{ date_formatted }}
-
-        <h3>{{ datos[0].pri_nombre }} {{ datos[0].pri_apellido }}</h3>
-
-        <!-- Formato del tipo de Comida -->
-        {% if datos[0].tipo == "D" %}
-            <h3>Desayuno</h3>
-        {% elif datos[0].tipo == "A" %}
-            <h3>Almuerzo</h3>
-        {% elif datos[0].tipo_alimento == "C" %}
-            <h3>Cena</h3>
-        {% elif datos[0].tipo_alimento == "M" %}
-            <h3>Merienda</h3>
-        {% endif %}
-        <!-- // -->
-
-        <div class="form-group" value="">
-            <label>Proteinas</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Proteina" %}
-                <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>       
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Carbohidratos</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Carbohidrato" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h4 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-utensils mr-2"></i>
+                {{ 'Desayuno' if datos[0].tipo == 'D' 
+                else 'Almuerzo' if datos[0].tipo == 'A' 
+                else 'Cena' if datos[0].tipo == 'C' 
+                else 'Merienda' if datos[0].tipo == 'M' }}
+            </h4>
+            <div class="text-secondary">
+                <i class="fas fa-calendar-day mr-2"></i>{{ date_formatted }}
+            </div>
         </div>
         
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Vegetales</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Vegetal" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Frutas</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Fruta" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Grasas</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Grasa" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Bebidas</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Bebida" %}
-    
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Dulce</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Dulce" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div>-----------</div>
-        
-        <div class="form-group" value="">
-            <label>Otros</label>
-            {% for comida in datos %}
-                {% if comida.tipo_alimento == "Otros" %}
-                    <li>{{ comida.nombre }} {{ comida.cantidad }}</li>
-                {% endif %}
-            {% endfor %}
-        </div>
+        <div class="card-body">
+            <h5 class="mb-4 text-gray-800">
+                <i class="fas fa-user-injured mr-2"></i>
+                {{ datos[0].pri_nombre }} {{ datos[0].pri_apellido }}
+            </h5>
 
-        <h1>Satisfaccion</h1>
-        <label>{{datos[0].satisfaccion}}</label>
+            <!-- Grupos de Alimentos -->
+            <div class="row">
+                {% macro food_section(title, icon, category) %}
+                <div class="col-md-6 col-xl-4 mb-4">
+                    <div class="card border-left-primary h-100">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                <i class="{{ icon }} mr-2"></i>{{ title }}
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            {% set items = datos | selectattr('tipo_alimento', 'equalto', category) | list %}
+                            {% if items %}
+                            <ul class="list-group list-group-flush">
+                                {% for comida in items %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>{{ comida.nombre }}</span>
+                                    <span class="badge badge-primary badge-pill">{{ comida.cantidad }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <div class="text-center text-muted py-2">
+                                <small>No hay items en esta categoría</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endmacro %}
 
-        <h1>Comentario</h1>
-        <label>{{datos[0].comentario}}</label>
+                {{ food_section('Proteínas', 'fas fa-drumstick-bite', 'Proteina') }}
+                {{ food_section('Carbohidratos', 'fas fa-bread-slice', 'Carbohidrato') }}
+                {{ food_section('Vegetales', 'fas fa-carrot', 'Vegetal') }}
+                {{ food_section('Frutas', 'fas fa-apple-alt', 'Fruta') }}
+                {{ food_section('Grasas', 'fas fa-bacon', 'Grasa') }}
+                {{ food_section('Bebidas', 'fas fa-glass-whiskey', 'Bebida') }}
+                {{ food_section('Dulces', 'fas fa-candy-cane', 'Dulce') }}
+                {{ food_section('Otros', 'fas fa-ellipsis-h', 'Otros') }}
+            </div>
 
+            <!-- Sección de Feedback -->
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-info h-100">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold text-info">
+                                <i class="fas fa-smile-beam mr-2"></i>Satisfacción
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="h5 font-weight-bold text-info">
+                                {{ datos[0].satisfaccion }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-warning h-100">
+                        <div class="card-header">
+                            <h6 class="m-0 font-weight-bold text-warning">
+                                <i class="fas fa-comment-dots mr-2"></i>Comentarios
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            {% if datos[0].comentario %}
+                            <blockquote class="blockquote mb-0">
+                                <p class="text-muted">{{ datos[0].comentario }}</p>
+                            </blockquote>
+                            {% else %}
+                            <div class="text-center text-muted py-2">
+                                <small>No hay comentarios registrados</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
