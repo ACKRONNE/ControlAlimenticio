@@ -4,40 +4,75 @@
 
 {% block body %}
 
-<!-- Static title -->
-<a href="{{ url_for('paciente.especialistas', id=paciente.id_paciente) }}">Volver</a>
-<a href="{{ url_for('paciente.perfil', id=paciente.id_paciente) }}">Perfil</a>
-<h1>Especialistas</h1>
-<!-- // -->
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{especialista.pri_nombre}} {{especialista.pri_apellido}}</h1>
+    </div>
 
-<h1>{{especialista.pri_nombre}} {{especialista.pri_apellido}}</h1>
-<div>Correo: {{especialista.correo}}</div>
-<div>Telefono: {{especialista.telefono}}</div>
-<div>Especialidad: {{especialista.especialidad}}</div>
+    <!-- Información del Especialista -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Información del profesional</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-2">
+                        <i class="fas fa-envelope fa-fw text-primary"></i> 
+                        <strong>Correo:</strong> {{especialista.correo}}
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-phone fa-fw text-primary"></i> 
+                        <strong>Teléfono:</strong> {{especialista.telefono}}
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-star-of-life fa-fw text-primary"></i> 
+                        <strong>Especialidad:</strong> {{especialista.especialidad}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<h2>Recetas</h2>
-<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='D') }}">Desayunos</a>
-<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='A') }}">Almuerzos</a>
-<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='C') }}">Cenas</a>
-<a href="{{ url_for('paciente.detalleEspecialista', id=paciente.id_paciente, espe=especialista.id_espe, tipo_comida='M') }}">Meriendas</a>
-
-<!-- Lista de comidas filtradas -->
-<h2>Comidas Designadas</h2>
-  {% if comidas %}
-<ul>
-    {% for comida in comidas %}
-    <li>
-        {{ comida.fecha_ini }} - {{ comida.nombre }} ({{ 'Desayuno' if comida.tipo == 'D' else 'Almuerzo' if comida.tipo == 'A' else 'Cena' if comida.tipo == 'C' else 'Merienda' if comida.tipo == 'M' else 'Desconocido' }})
-        <ul>
-            {% for alimento in comida.alimentos %}
-            <li>{{ alimento.nombre }} - {{ alimento.cantidad }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    {% endfor %}
-</ul>
-  {% else %}
-<p>No hay comidas para mostrar.</p>
-  {% endif %}
+    <!-- Lista de Comidas -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Comidas designadas</h6>
+        </div>
+        <div class="card-body">
+            {% if comidas %}
+            <div class="list-group">
+                {% for comida in comidas %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1 text-primary">{{ comida.nombre }}</h6>
+                            <small class="text-muted">{{ comida.fecha_ini.strftime('%d/%m/%Y') }}</small>
+                        </div>
+                        <span class="badge badge-pill badge-primary">
+                            {{ 'Desayuno' if comida.tipo == 'D' else 'Almuerzo' if comida.tipo == 'A' 
+                            else 'Cena' if comida.tipo == 'C' else 'Merienda' }}
+                        </span>
+                    </div>
+                    <ul class="list-group list-group-flush mt-2">
+                        {% for alimento in comida.alimentos %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                            <span>{{ alimento.nombre }}</span>
+                            <span class="badge badge-info badge-pill">{{ alimento.cantidad }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                No hay comidas para mostrar en esta categoría
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

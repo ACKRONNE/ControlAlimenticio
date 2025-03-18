@@ -474,4 +474,3 @@ def detalleEspecialista(id, espe):
     db.session.close()
 
     return render_template('p_detalle_especialista.html', especialista=especialista, paciente=paciente, comidas=comidas, tipo_comida=tipo_comida)
-# // >
