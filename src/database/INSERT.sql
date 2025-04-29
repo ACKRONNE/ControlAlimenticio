@@ -1,15 +1,12 @@
-INSERT INTO pacientes
-VALUES (1,'Kimberly','Kardashian','West','F','paciente@gmail.com',555123456,'1234','1990-05-15','Noel'),
+INSERT INTO pacientes VALUES (1,'Kimberly','Kardashian','West','F','paciente@gmail.com',555123456,'1234','1990-05-15','Noel'),
 (2,'María','García','López','F','paciente2@email.com',555123457,'1234','1985-08-22','Ana'),
 (3,'Carlos','Rodríguez','Martínez','M','paciente3@email.com',555123458,'1234','1998-02-10','Laura');
 
-INSERT INTO especialistas 
-VALUES (1,'Leonel','Messi','Rocusso','M','especialista@gmail.com',555987653,'1234','Nutricionista','Andres'),
+INSERT INTO especialistas VALUES (1,'Leonel','Messi','Rocusso','M','especialista@gmail.com',555987653,'1234','Nutricionista','Andres'),
 (2,'Alejandro','Martínez','López','M','especialista2@email.com',555987654,'1234','Dietista','Carolina'),
 (3,'Laura','Rodríguez','Sánchez','F','especialista3@email.com',555987655,'1234','Nutricionista','Juan');
 
-INSERT INTO alimentos
-VALUES (1,'Proteina','Pollo',1),
+INSERT INTO alimentos VALUES (1,'Proteina','Pollo',1),
 (2,'Carbohidrato','Arroz',2),
 (3,'Grasa','Aceite de Oliva',2),
 (4,'Vegetal','Espinacas',3),
@@ -35,14 +32,12 @@ VALUES (1,'Proteina','Pollo',1),
 (24,'Grasa','Nueces',2),
 (25,'Otros','Tofu',1);
 
-INSERT INTO comidas
-VALUES (1,1,'2023-07-15 8:00:00','D','Mal','No me gusta'),
+INSERT INTO comidas VALUES (1,1,'2023-07-15 8:00:00','D','Mal','No me gusta'),
 (1,1,'2023-07-15 12:00:00','A','Super','estuvo pesima '),
 (1,2,'2023-03-15 8:00:00','D','Normal','todo el tiempo lo mismo'),
 (1,2,'2023-03-15 12:00:00','A','Super','la combinacion estaba deliciosa');
 
-INSERT INTO a_c
-VALUES (1,1,'2023-07-15 8:00:00',1),
+INSERT INTO a_c VALUES (1,1,'2023-07-15 8:00:00',1),
 (1,1,'2023-07-15 8:00:00',2),
 (1,1,'2023-07-15 8:00:00',3),
 (1,1,'2023-07-15 8:00:00',4),

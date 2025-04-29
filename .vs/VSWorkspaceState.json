@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\routes",
-    "\\templates"
+    "\\src\\database",
+    "\\src\\routes"
   ],
-  "SelectedNode": "\\templates\\p_editar_comida.html",
+  "SelectedNode": "\\.env",
   "PreviewInSolutionExplorer": false
 }
