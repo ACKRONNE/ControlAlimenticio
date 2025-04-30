@@ -325,7 +325,19 @@ def updateFood(id, date):
         Comida.id_paciente == id,
         AC.fecha_ini == Comida.fecha_ini
     ).distinct().all()
-             
+
+    if request.method == 'GET' and request.args.get('modal') == '1':
+        return render_template(
+            'p_editar_comida.html',
+            id=id,
+            get_pac=get_pac,
+            get_ali=get_ali,
+            get_esp=get_esp,
+            datos=datos,
+            date=date,
+            date_formatted=date_formatted
+        )
+
     if request.method == 'POST':
         try:
 
@@ -346,32 +358,29 @@ def updateFood(id, date):
 
             db.session.commit()
 
-            _alimento = request.form.getlist('alimentos[]')
+            submitted_ids = set(int(x) for x in request.form.getlist('alimentos[]') if x)
 
-            for alimento in _alimento:
-                if alimento:
-                    # Verificar si el alimento ya existe
-                    existing_ac = db.session.query(AC).filter(
-                        AC.id_paciente == get_pac.id_paciente,
-                        AC.id_espe == id_espe,
-                        AC.fecha_ini == date,
-                        AC.id_alimento == alimento
-                    ).first()
+            existing_ac_records = db.session.query(AC).filter(
+                AC.id_paciente == get_pac.id_paciente,
+                AC.id_espe    == id_espe,
+                AC.fecha_ini  == date
+            ).all()
+            existing_ids = set(ac.id_alimento for ac in existing_ac_records)
 
-                    if existing_ac is None:
-                        new_ac = AC(
-                            get_pac.id_paciente,
-                            id_espe,
-                            date,
-                            alimento
-                        )
-                        db.session.add(new_ac)
-                        print("Registro de alimento agregado con exito")
-                        flash("Registro de alimento agregado con exito")
-                    else:
-                        print("El alimento ya ha sido agregado anteriormente")
+            for ac in existing_ac_records:
+                if ac.id_alimento not in submitted_ids:
+                    db.session.delete(ac)
 
-            db.session.commit()
+            for ali_id in submitted_ids - existing_ids:
+                new_ac = AC(
+                    get_pac.id_paciente,
+                    id_espe,
+                    date,
+                    ali_id
+                )
+                db.session.add(new_ac)
+
+            db.session.commit()            
         except Exception as e:
             db.session.rollback()
             flash("Ocurrió un error al modificar la comida.", "danger")
