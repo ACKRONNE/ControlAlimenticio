@@ -7,56 +7,48 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('paciente.inicio', id=paciente.id_paciente) }}">
-            <div class="sidebar-brand-icon">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
-            </div>
-            <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('paciente.inicio', id=paciente.id_paciente) }}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Vista Principal</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Utilidades
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('paciente.inicio', id=paciente.id_paciente) }}">
+        <div class="sidebar-brand-icon">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
         </div>
+        <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+      </a>
+      <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+              <a class="nav-link" href="{{url_for('paciente.inicio', id=paciente.id_paciente)}}">
+                  <i class="fas fa-fw fa-tachometer-alt"></i>
+                  <span>Vista Principal</span></a>
+          </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('paciente.addFood', id=paciente.id_paciente) }}">
-                <i class="fas fa-fw fa-utensils"></i>
-                <span>Agregar Comidas</span></a>
-        </li>
+          <!-- Divider -->
+          <hr class="sidebar-divider">
 
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('paciente.especialistas', id=paciente.id_paciente) }}">
-                <i class="fas fa-fw fa-stethoscope"></i>
-                <span>Especialistas</span></a>
-        </li>
+          <!-- Heading -->
+          <div class="sidebar-heading">
+              Utilidades
+          </div>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+          <!-- Nav Item - Charts -->
+          <li class="nav-item">
+              <a class="nav-link" href="{{url_for('paciente.addFood', id=paciente.id_paciente)}}">
+                  <i class="fas fa-fw fa-utensils"></i>
+                  <span>Agregar Comidas</span></a>
+          </li>
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+          <!-- Nav Item - Tables -->
+          <li class="nav-item">
+              <a class="nav-link" href="{{url_for('paciente.especialistas', id=paciente.id_paciente)}}">
+                  <i class="fas fa-fw fa-stethoscope"></i>
+                  <span>Especialistas</span></a>
+          </li>
+      <hr class="sidebar-divider d-none d-md-block">
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
     </ul>
     <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
         <!-- Topbar -->
@@ -71,9 +63,9 @@
                 <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/undraw_profile.svg') }}">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{ url_for('paciente.perfil', id=paciente.id_paciente) }}">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Perfil
+                  Editar Perfil
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -86,123 +78,180 @@
         </nav>
         <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
         <div class="container-fluid">
           <h1 class="h3 mb-4 text-gray-800">Perfil del Paciente</h1>
-
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Información Personal</h6>
             </div>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Nombre</span>
-                  <span>{{ paciente.pri_nombre }} {{ paciente.seg_nombre }}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Apellidos</span>
-                  <span>{{ paciente.pri_apellido }} {{ paciente.seg_apellido }}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Sexo</span>
-                  <span>
-                    {% if paciente.sexo == "F" %}Femenino{% elif paciente.sexo == "M" %}Masculino{% else %}Otro{% endif %}
-                  </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Correo</span>
-                  <span>{{ paciente.correo }}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Teléfono</span>
-                  <span>{{ paciente.telefono }}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Edad</span>
-                  <span id="edad"></span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Clave</span>
-                  <span>*******</span>
-                </li>
+                <li class="list-group-item d-flex justify-content-between"><span>Nombre</span><span>{{ paciente.pri_nombre }} {{ paciente.seg_nombre }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Apellidos</span><span>{{ paciente.pri_apellido }} {{ paciente.seg_apellido }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Sexo</span><span>{% if paciente.sexo == 'F' %}Femenino{% elif paciente.sexo == 'M' %}Masculino{% else %}Otro{% endif %}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Correo</span><span>{{ paciente.correo }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Teléfono</span><span>{{ paciente.telefono }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Edad</span><span id="edad"></span></li>
               </ul>
-
               <div class="mt-4">
-                <a href="{{ url_for('paciente.updateProfile', id=paciente.id_paciente) }}" class="btn btn-primary mr-2">Editar Perfil</a>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Editar Perfil</button>
                 <form action="{{ url_for('paciente.deleteAccount', id=paciente.id_paciente) }}" method="post" class="d-inline">
                   <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
                 </form>
-                <a href="{{ url_for('index.logout', id=paciente.id_paciente) }}" class="btn btn-secondary ml-2">Cerrar Sesión</a>
+                <a href="#" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#logoutModal">Cerrar Sesión</a>
               </div>
             </div>
           </div>
         </div>
-        <!-- /.container-fluid -->
+
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-secondary text-white">
+                <h5 class="modal-title" id="editProfileLabel">Editar Perfil</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form id="editProfileForm" action="{{ url_for('paciente.updateProfile', id=paciente.id_paciente) }}" method="POST">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="pac-correo">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="pac-correo" name="pac-correo" value="{{ paciente.correo }}" required>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="pac-pri-nombre">Primer Nombre</label>
+                      <input type="text" class="form-control" id="pac-pri-nombre" name="pac-pri-nombre" value="{{ paciente.pri_nombre }}" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="pac-seg-nombre">Segundo Nombre</label>
+                      <input type="text" class="form-control" id="pac-seg-nombre" name="pac-seg-nombre" value="{{ paciente.seg_nombre }}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="pac-pri-apellido">Primer Apellido</label>
+                      <input type="text" class="form-control" id="pac-pri-apellido" name="pac-pri-apellido" value="{{ paciente.pri_apellido }}" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="pac-seg-apellido">Segundo Apellido</label>
+                      <input type="text" class="form-control" id="pac-seg-apellido" name="pac-seg-apellido" value="{{ paciente.seg_apellido }}" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Género</label><br>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="pac-sexo" id="sexoM" value="M" {% if paciente.sexo == 'M' %}checked{% endif %}>
+                      <label class="form-check-label" for="sexoM">Hombre</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="pac-sexo" id="sexoF" value="F" {% if paciente.sexo == 'F' %}checked{% endif %}>
+                      <label class="form-check-label" for="sexoF">Mujer</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="pac-sexo" id="sexoO" value="O" {% if paciente.sexo == 'O' %}checked{% endif %}>
+                      <label class="form-check-label" for="sexoO">Otro</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="pac-telefono">Teléfono</label>
+                    <input type="tel" class="form-control" id="pac-telefono" name="pac-telefono" value="{{ paciente.telefono }}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="pac-clave">Contraseña</label>
+                    <input type="password" class="form-control" id="pac-clave" name="pac-clave" placeholder="Nueva contraseña" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="pac-fecha-nacimiento">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="pac-fecha-nacimiento" name="pac-fecha-nacimiento" value="{{ paciente.fecha_nacimiento }}" required>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logout Modal -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">¿Listo para irte?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">Selecciona "Cerrar Sesión" si estás listo para finalizar tu sesión.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="{{ url_for('index.logout', id=paciente.id_paciente) }}">Cerrar Sesión</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; pösis corp 2025</span>
-          </div>
-        </div>
+        <div class="container my-auto"><div class="copyright text-center my-auto"><span>Copyright &copy; pösis corp 2025</span></div></div>
       </footer>
-      <!-- End of Footer -->
-    </div>
-    <!-- End of Content Wrapper -->
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->  
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="logoutModalLabel">¿Listo para irte?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Selecciona "Cerrar Sesión" si estás listo para finalizar tu sesión actual.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="{{ url_for('index.logout', id=paciente.id_paciente) }}">Cerrar Sesión</a>
-        </div>
-      </div>
     </div>
   </div>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Core plugin JavaScript-->
   <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-  <!-- Custom scripts for all pages-->
   <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
 
   <script>
     const fechaNacimiento = "{{ paciente.fecha_nacimiento }}";
     function calcularEdad(fecha) {
-      const hoy = new Date();
-      const nacimiento = new Date(fecha);
+      const hoy = new Date(); const nacimiento = new Date(fecha);
       let edad = hoy.getFullYear() - nacimiento.getFullYear();
-      const mes = hoy.getMonth() - nacimiento.getMonth();
-      if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-        edad--;
-      }
+      const mes = hoy.getMonth() - nacimiento.getMonth(); if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
       return edad;
     }
     document.getElementById('edad').textContent = calcularEdad(fechaNacimiento);
   </script>
+
+  <script>
+
+    $('#editProfileForm').on('submit', function(e) {
+      e.preventDefault();
+      var $form = $(this);
+      $.ajax({
+        url: $form.attr('action'),
+        type: 'POST',
+        data: $form.serialize(),
+        success: function(resp) {
+      
+          $('#editProfileModal').modal('hide');
+      
+          var alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">'
+            + resp.message +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+          $('.container-fluid').prepend(alert);
+      
+        },
+        error: function(xhr) {
+          var msg = 'Error al actualizar perfil.';
+          if (xhr.responseJSON && xhr.responseJSON.message) { msg = xhr.responseJSON.message; }
+          var error = '<div class="alert alert-danger alert-dismissible fade show" role="alert">'
+            + msg +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+          $('#editProfileModal .modal-body').prepend(error);
+        }
+      });
+    });
+    </script>    
 </body>
 {% endblock %}

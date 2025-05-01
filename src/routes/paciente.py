@@ -145,8 +145,10 @@ def updateProfile(id):
         paciente.seg_nombre = request.form['pac-seg-nombre']
 
         db.session.commit()
-        db.session.close()
-
+        
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({ 'success': True, 'message': 'Perfil actualizado correctamente' })
+        
         flash("Perfil actualizado correctamente", "success")
         return render_template('p_editar_perfil.html', paciente=paciente)
     
