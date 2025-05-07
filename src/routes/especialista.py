@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
-from scipy.fft import idctn
 from werkzeug.security import generate_password_hash
 from sqlalchemy.orm import aliased
 from sqlalchemy import cast, Date, distinct, select
