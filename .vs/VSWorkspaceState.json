@@ -3,7 +3,9 @@
     "",
     "\\src",
     "\\src\\database",
-    "\\src\\routes"
+    "\\src\\routes",
+    "\\templates"
   ],
+  "SelectedNode": "\\templates\\index.html",
   "PreviewInSolutionExplorer": false
 }
