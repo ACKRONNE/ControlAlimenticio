@@ -1,31 +1,183 @@
 {% extends 'layout.html' %}
 
-{% block title %}Profile Paciente{% endblock %}
+{% block title %}Perfil Especialista{% endblock %}
 
 {% block body %}
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('especialista.inicio', id=get_esp.id_espe) }}">
+        <div class="sidebar-brand-icon">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+        </div>
+        <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Inicio</span></a>
+      </li>
 
-    <a href="{{ url_for('especialista.inicio', id=get_esp.id_espe) }}">Volver</a>
+      <!-- Agrega aquí los elementos específicos del especialista si son necesarios -->
+      
+      <hr class="sidebar-divider d-none d-md-block">
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
 
-        <p>Nombre {{get_esp.pri_nombre}} {{get_esp.seg_nombre}}</p>
-        <p>Apellidos {{get_esp.pri_apellido}} {{get_esp.seg_apellido}}</p>
-        <p>Sexo 
-            {% if get_esp.sexo == "F" %}
-            Femenino
-            {% elif get_esp.sexo == "M" %}
-                Masculino
-            {% elif get_esp.sexo == "O" %}
-                Otro
-            {% endif %}
-        </p>
-        <p>Correo {{get_esp.correo}}</p> 
-        <p>Telefono {{get_esp.telefono}}</p> 
-        <p>Especialidad {{get_esp.especialidad}}</p>
-        <p>Clave *******</p> 
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ get_esp.pri_nombre }} {{ get_esp.pri_apellido }}</span>
+                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/undraw_profile.svg') }}">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Editar Perfil
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Cerrar Sesión
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
 
+        <div class="container-fluid">
+          <h1 class="h3 mb-4 text-gray-800">Perfil del Especialista</h1>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Información Profesional</h6>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between"><span>Nombre</span><span>{{ get_esp.pri_nombre }} {{ get_esp.seg_nombre }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Apellidos</span><span>{{ get_esp.pri_apellido }} {{ get_esp.seg_apellido }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Sexo</span><span>
+                  {% if get_esp.sexo == "F" %}Femenino
+                  {% elif get_esp.sexo == "M" %}Masculino
+                  {% else %}Otro{% endif %}
+                </span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Correo</span><span>{{ get_esp.correo }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Teléfono</span><span>{{ get_esp.telefono }}</span></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Especialidad</span><span>{{ get_esp.especialidad }}</span></li>
+              </ul>
+              <div class="mt-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Editar Perfil</button>
+                <form action="{{ url_for('especialista.deleteAccount', id=get_esp.id_espe) }}" method="post" class="d-inline">
+                  <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                </form>
+                <a href="#" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#logoutModal">Cerrar Sesión</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <a href="{{ url_for('especialista.updateProfile', id=get_esp.id_espe) }}">Editar Perfil</a>
-        <form action="{{ url_for('especialista.deleteAccount', id=get_esp.id_espe) }}" method="post">
-            <input type="submit" value="Eliminar Cuenta">
-        </form>
-        <a href="{{ url_for('index.logout', id=get_esp.id_espe) }}">Cerrar Sesion</a>
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary text-white">
+                <h5 class="modal-title" id="editProfileLabel">Editar Perfil</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form action="{{ url_for('especialista.updateProfile', id=get_esp.id_espe) }}" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                    <label>Primer Nombre</label>
+                    <input type="text" class="form-control" value="{{ get_esp.pri_nombre }}" name="pri_nombre" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Segundo Nombre</label>
+                    <input type="text" class="form-control" value="{{ get_esp.seg_nombre }}" name="seg_nombre">
+                    </div>
+                    <div class="form-group">
+                    <label>Primer Apellido</label>
+                    <input type="text" class="form-control" value="{{ get_esp.pri_apellido }}" name="pri_apellido" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Segundo Apellido</label>
+                    <input type="text" class="form-control" value="{{ get_esp.seg_apellido }}" name="seg_apellido">
+                    </div>
+                    <div class="form-group">
+                    <label>Sexo</label>
+                    <select class="form-control" name="sexo" required>
+                        <option value="F" {% if get_esp.sexo == "F" %}selected{% endif %}>Femenino</option>
+                        <option value="M" {% if get_esp.sexo == "M" %}selected{% endif %}>Masculino</option>
+                        <option value="O" {% if get_esp.sexo == "O" %}selected{% endif %}>Otro</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" class="form-control" value="{{ get_esp.correo }}" name="correo" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" class="form-control" value="{{ get_esp.telefono }}" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                    <label>Especialidad</label>
+                    <input type="text" class="form-control" value="{{ get_esp.especialidad }}" name="especialidad" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <!-- Logout Modal (Usar el mismo de p_perfil) -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">¿Listo para irte?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">Selecciona "Cerrar Sesión" si estás listo para finalizar tu sesión.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="{{ url_for('index.logout', id=get_esp.id_espe) }}">Cerrar Sesión</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto"><div class="copyright text-center my-auto"><span>Copyright &copy; amparo & marian  2025</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+</body>
 {% endblock %}

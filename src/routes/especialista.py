@@ -52,7 +52,7 @@ def registro():
 
         return redirect(url_for('index.index'))
     else:
-        return render_template('e_registro.html')
+        return render_template('registro.html')
 # // >
 
 # Inicio <

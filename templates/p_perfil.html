@@ -18,7 +18,7 @@
             <li class="nav-item active">
               <a class="nav-link" href="{{url_for('paciente.inicio', id=paciente.id_paciente)}}">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
-                  <span>Vista Principal</span></a>
+                  <span>Bienvenido de Nuevo!</span></a>
           </li>
 
           <!-- Divider -->
@@ -96,7 +96,8 @@
               <div class="mt-4">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Editar Perfil</button>
                 <form action="{{ url_for('paciente.deleteAccount', id=paciente.id_paciente) }}" method="post" class="d-inline">
-                  <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                  <button type="submit" class="btn btn-danger">Eliminar Cuenta</button> 
+                  <!-- FIXME: No funciona eliminar la cuenta-->
                 </form>
                 <a href="#" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#logoutModal">Cerrar Sesión</a>
               </div>
@@ -198,7 +199,7 @@
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto"><div class="copyright text-center my-auto"><span>Copyright &copy; pösis corp 2025</span></div></div>
+        <div class="container my-auto"><div class="copyright text-center my-auto"><span>Copyright &copy; amparo & marian  2025</span></div></div>
       </footer>
     </div>
   </div>

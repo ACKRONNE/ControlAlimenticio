@@ -208,7 +208,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; pösis corp 2025</span>
+                        <span>Copyright &copy; amparo & marian  2025</span>
                     </div>
                 </div>
             </footer>
@@ -236,7 +236,7 @@
                 <div class="modal-body">Selecciona "Cerrar sesión" abajo si estas listo para cerrar tu sesion actual.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
+                    <a class="btn btn-primary" href="{{ url_for('index.logout', id=get_pac.id_paciente) }}">Cerrar sesión</a>
                 </div>
             </div>
         </div>

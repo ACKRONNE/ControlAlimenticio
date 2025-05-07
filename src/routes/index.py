@@ -58,7 +58,6 @@ def login():
         
             return redirect(url_for('paciente.inicio', id=_id))
 
-
         else:    
             account = db.session.query(Especialista.id_espe, Especialista.clave).filter(Especialista.correo == _correo).first()
 

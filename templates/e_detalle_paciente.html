@@ -3,48 +3,196 @@
 {% block title %}Detalle Paciente{% endblock %}
 
 {% block body %}
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+            </a>
 
-<!-- Static title -->
-<a href="{{ url_for('especialista.inicio', id=get_esp.id_espe) }}">Volver</a>
-<a href="{{ url_for('especialista.perfil', id=get_esp.id_espe) }}">Perfil</a>
-<h1>Detalles Paciente</h1>
-<!-- // -->
+            <hr class="sidebar-divider my-0">
 
-<h1>{{get_pac.pri_nombre}} {{get_pac.pri_apellido}}</h1>
-<div>Correo: {{get_pac.correo}}</div>
-<div>Telefono: {{get_pac.telefono}}</div>
-<div>
-    Genero:
-    {% if get_pac.sexo == "M" %}
-    <span>Masculino</span>
-    {% elif get_pac.sexo == "F" %}
-    <span>Femenino</span>
-    {% elif get_pac.sexo == "O" %}
-    <span>Otro</span>
-    {% endif %}
-</div>
-<div id="edad"></div>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Inicio</span></a>
+            </li>
 
-<a href="{{ url_for('especialista.foodDetail', id_espe=get_esp.id_espe, id_pac=get_pac.id_paciente )}}">Recetas Ingresadas por el Paciente</a>
-<!-- Lista de Recetas por especialista  -->
-<a href="{{ url_for('especialista.addFood', id_espe=get_esp.id_espe, id_pac=get_pac.id_paciente) }}">Añadir Comida</a>
+            <hr class="sidebar-divider">
 
-<script>
-    const fechaNacimiento = "{{ get_pac.fecha_nacimiento }}";
+            <!-- <div class="sidebar-heading">
+                Acciones
+            </div>
 
-    function calcularEdad(fecha) {
-        const hoy = new Date();
-        const nacimiento = new Date(fecha);
-        let edad = hoy.getFullYear() - nacimiento.getFullYear();
-        const mes = hoy.getMonth() - nacimiento.getMonth();
-        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-            edad--;
-        }
-        return edad;
-    }
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.receipeList', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-book-medical"></i>
+                    <span>Agregar Paciente</span></a>
+            </li>
 
-    const edad = calcularEdad(fechaNacimiento);
-    document.getElementById('edad').textContent = `Edad: ${edad}`;
-</script>
+            <hr class="sidebar-divider d-none d-md-block"> -->
 
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{get_esp.pri_nombre}} {{get_esp.pri_apellido}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ url_for('static', filename='img/undraw_profile.svg') }}">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ url_for('especialista.perfil', id=get_esp.id_espe)}}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar Sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Contenido Principal -->
+                <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Detalles del Paciente</h1>
+                    </div>
+
+                    <!-- Tarjeta de Información -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                {{get_pac.pri_nombre}} {{get_pac.pri_apellido}}
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h5 class="text-primary"><i class="fas fa-envelope"></i> Correo</h5>
+                                        <p class="text-gray-800">{{get_pac.correo}}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h5 class="text-primary"><i class="fas fa-birthday-cake"></i> Edad</h5>
+                                        <p class="text-gray-800" id="edad"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h5 class="text-primary"><i class="fas fa-phone"></i> Teléfono</h5>
+                                        <p class="text-gray-800">{{get_pac.telefono}}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h5 class="text-primary"><i class="fas fa-venus-mars"></i> Género</h5>
+                                        <p class="text-gray-800">
+                                            {% if get_pac.sexo == "M" %}
+                                                Masculino
+                                            {% elif get_pac.sexo == "F" %}
+                                                Femenino
+                                            {% elif get_pac.sexo == "O" %}
+                                                Otro
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Acciones -->
+                            <div class="mt-4">
+                                <a href="{{ url_for('especialista.foodDetail', id_espe=get_esp.id_espe, id_pac=get_pac.id_paciente )}}" 
+                                   class="btn btn-primary btn-icon-split mr-3">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-utensils"></i>
+                                    </span>
+                                    <span class="text">Recetas del Paciente</span>
+                                </a>
+                                
+                                <a href="{{ url_for('especialista.addFood', id_espe=get_esp.id_espe, id_pac=get_pac.id_paciente) }}" 
+                                   class="btn btn-success btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </span>
+                                    <span class="text">Añadir Comida</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; amparo & marian  2025</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para irte?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selecciona "Cerrar sesión" para finalizar tu sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="{{ url_for('index.logout', id=get_esp.id_espe) }}">Cerrar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+    <script>
+        // Cálculo de Edad
+        const calcularEdad = (fecha) => {
+            const hoy = new Date();
+            const nacimiento = new Date(fecha);
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+            const mes = hoy.getMonth() - nacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+                edad--;
+            }
+            return edad;
+        };
+
+        document.getElementById('edad').textContent = `Edad: ${calcularEdad("{{ get_pac.fecha_nacimiento }}")}`;
+    </script>
+</body>
 {% endblock %}

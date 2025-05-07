@@ -23,10 +23,18 @@ def registro():
     sexo = request.form['pac-sexo']
     correo = request.form['pac-correo']
     telefono = request.form['pac-telefono']
-    clave = request.form['pac-clave']
+    clave = request.form.get('pac-clave')
+    clave2 = request.form.get('pac-clave2')
     fecha_nacimiento = (request.form['pac-fecha-nacimiento'])
     seg_nombre = request.form['pac-seg-nombre']
 
+    if not clave or not clave2:
+        return "Las contraseñas son requeridas", 400
+
+    # Validar coincidencia de contraseñas
+    if clave != clave2:
+        return "Las contraseñas no coinciden", 400
+    
     # Hacer la contraseña segura
     hashed_clave = generate_password_hash(clave)   
     # //
@@ -54,7 +62,7 @@ def registro():
     return redirect(url_for('index.index'))
   
   else:
-      return render_template('p_registro.html')
+      return render_template('registro.html')
 # // > 
 
 # Inicio <
