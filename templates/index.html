@@ -47,9 +47,9 @@
                                           <hr>
                                       </form>
                                     
-                                      <div class="text-center">
+                                      <!-- <div class="text-center">
                                           <a class="small" href="{{ url_for('index.reset_request') }}">Olvidaste tu contraseña?</a>
-                                      </div>
+                                      </div> -->
                                       <div class="text-center">
                                           <a class="small" href="{{ url_for('index.registro') }}">Crea una cuenta!</a>
                                       </div>
@@ -66,14 +66,100 @@
       </div>
   
       <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="../static/vendor/jquery/jquery.min.js"></script>
+      <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   
       <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
   
       <!-- Custom scripts for all pages-->
-      <script src="js/sb-admin-2.min.js"></script>
+      <script src="../static/js/sb-admin-2.min.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... Código existente ...
+    
+            // Función de validación
+            function validarFormulario(event) {
+                event.preventDefault(); // Prevenir envío
+                let isValid = true;
+    
+                // Limpiar mensajes anteriores
+                document.querySelectorAll('.error-msg').forEach(msg => msg.remove());
+    
+                // Validar campos comunes
+                const camposRequeridos = form.querySelectorAll('[required]');
+                camposRequeridos.forEach(campo => {
+                    if (!campo.value.trim()) {
+                        mostrarError(campo, 'Este campo es obligatorio');
+                        isValid = false;
+                    }
+                });
+    
+                // Validar email
+                const email = form.querySelector('[type="email"]');
+                if (!validarEmail(email.value)) {
+                    mostrarError(email, 'Correo electrónico inválido');
+                    isValid = false;
+                }
+    
+                // Validar contraseñas
+                const clave = form.querySelector('[data-prefix="clave"]');
+                const clave2 = form.querySelector('[data-prefix="clave2"]');
+                if (clave.value !== clave2.value) {
+                    mostrarError(clave2, 'Las contraseñas no coinciden');
+                    isValid = false;
+                }
+                if (clave.value.length < 6) {
+                    mostrarError(clave, 'Mínimo 6 caracteres');
+                    isValid = false;
+                }
+    
+                // Validar campos condicionales
+                const tipo = document.querySelector('input[name="tipo"]:checked').value;
+                if (tipo === 'especialista') {
+                    const especialidad = document.getElementById('especialidadInput');
+                    if (!especialidad.value.trim()) {
+                        mostrarError(especialidad, 'Especialidad es requerida');
+                        isValid = false;
+                    }
+                } else {
+                    const fechaNac = document.getElementById('fechaNacimientoInput');
+                    if (!fechaNac.value) {
+                        mostrarError(fechaNac, 'Fecha de nacimiento es requerida');
+                        isValid = false;
+                    }
+                }
+    
+                // Validar género seleccionado
+                const genero = form.querySelector('[name="sexo"]:checked');
+                if (!genero) {
+                    mostrarError(form.querySelector('[name="sexo"]').closest('.form-group'), 'Selecciona un género');
+                    isValid = false;
+                }
+    
+                if (isValid) {
+                    form.submit(); // Enviar si todo está bien
+                }
+            }
+    
+            // Helper para validar email
+            function validarEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+    
+            // Helper para mostrar errores
+            function mostrarError(campo, mensaje) {
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-msg text-danger small mt-1';
+                errorMsg.textContent = mensaje;
+                campo.parentNode.appendChild(errorMsg);
+                campo.focus();
+            }
+    
+            // Agregar event listener al formulario
+            form.addEventListener('submit', validarFormulario);
+        });
+    </script>
   
   </body>
 

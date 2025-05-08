@@ -9,7 +9,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('especialista.inicio', id=get_esp.id_espe) }}">
         <div class="sidebar-brand-icon">
-          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+          <img src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
         </div>
         <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
       </a>
@@ -39,7 +39,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ get_esp.pri_nombre }} {{ get_esp.pri_apellido }}</span>
-                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/undraw_profile.svg') }}">
+                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='../static/img/undraw_profile.svg') }}">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">
@@ -174,10 +174,10 @@
   <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='../static/vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='../static/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='../static/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='../static/js/sb-admin-2.min.js') }}"></script>
 
 </body>
 {% endblock %}

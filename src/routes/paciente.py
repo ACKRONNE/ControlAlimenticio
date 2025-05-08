@@ -25,7 +25,7 @@ def registro():
     telefono = request.form['pac-telefono']
     clave = request.form.get('pac-clave')
     clave2 = request.form.get('pac-clave2')
-    fecha_nacimiento = (request.form['pac-fecha-nacimiento'])
+    fecha_nac_str = request.form.get('pac-fecha-nacimiento')
     seg_nombre = request.form['pac-seg-nombre']
 
     if not clave or not clave2:
@@ -38,6 +38,16 @@ def registro():
     # Hacer la contraseña segura
     hashed_clave = generate_password_hash(clave)   
     # //
+
+    if not fecha_nac_str:
+        flash('La fecha de nacimiento es requerida', 'danger')
+        return redirect(url_for('paciente.registro'))
+
+    try:
+        fecha_nacimiento = datetime.strptime(fecha_nac_str, '%Y-%m-%d').date()
+    except ValueError:
+        flash('Formato de fecha inválido. Use AAAA-MM-DD', 'danger')
+        return redirect(url_for('paciente.registro'))  
 
     # Se inserta el paciente en la tabla
     new_pac = Paciente (
