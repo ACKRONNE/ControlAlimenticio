@@ -79,7 +79,6 @@ def login():
 def logout(id):
     
     user = Paciente.query.get(id)
-
     if user is None:
         return "Usuario no encontrado"
 

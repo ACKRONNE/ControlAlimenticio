@@ -190,86 +190,18 @@ def deleteAccount(id):
         return redirect(url_for('index.index'))
 # // >
 
-# FIXME: Agregar una validacion que si o consigue a ningun especialista muestre un mensaje que diga, usted no tienen un especialista asignado por favor contacte a la fundacion para mas informacion
-# Agregar Comida < 
-@pac.route('/agregar_comida/<id>', methods=['GET', 'POST'])
-def addFood(id):     
-
-    get_pac = db.session.query(Paciente).filter(Paciente.id_paciente == id).first()
-    get_esp = (
-        db.session.query(Especialista)
-        .join(Asignacion, Especialista.id_espe == Asignacion.id_espe)
-        .filter(Asignacion.id_paciente == id)
-        .all()
-    )
-    
-    if not get_esp:
-        flash("No tienes especialistas asignados. Contacta a la fundación.", "warning")
-        return redirect(url_for('paciente.inicio', id=id))
-
-    get_ali = db.session.query(Alimento).all()
-    
-    if get_pac is None:
-        flash('Paciente no encontrado.', 'danger')
-        return redirect(url_for('index.index')) 
-
-    if request.method == 'POST':
-        try:
-            tipo_comida = request.form['tipo-comida']
-            satisfaccion = request.form['satisfaccion']
-            comentario = request.form['comentario']
-            fecha_ini = request.form['fecha-ini']
-            id_espe = request.form['id-espe']
-
-            new_comida = Comida(
-                get_pac.id_paciente,
-                int(id_espe),
-                fecha_ini,
-                tipo_comida,
-                satisfaccion,
-                comentario
-            )
-            db.session.add(new_comida)
-            db.session.commit()
-
-            print("Comida agregada con exito")
-            flash("Comida agregada correctamente", "success")
-
-            _alimento = request.form.getlist('alimentos[]')
-
-            for alimento in _alimento:
-                if alimento:
-                    new_ac = AC(
-                        get_pac.id_paciente,
-                        id_espe,
-                        fecha_ini,
-                        alimento
-                    )
-                    db.session.add(new_ac)
-
-                    print("Registro de alimento agregado con exito")
-                    flash("Registro de alimento agregado con exito")
-
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            flash("Ocurrió un error al agregar la comida.", "danger")
-            print(f"Error: {e}")
-        finally:
-            db.session.close()
-
-        return redirect(url_for('paciente.inicio', id=id))
-    
-    return render_template('p_add_comida.html', id=id, get_pac=get_pac, get_ali=get_ali, get_esp=get_esp, selected_alimentos=[])
-# // >
-
 # Detalle de comida <
 @pac.route('/detalle_comida/<id>', methods=["GET"])
 def foodDetail(id):
     date = request.args.get('date')
+
     try:
         get_pac = db.session.query(Paciente.id_paciente).filter(Paciente.id_paciente == id).first()
-    
+
+        if not get_pac:
+            flash('Paciente no encontrado.', 'danger')
+            return redirect(url_for('paciente.inicio', id=id))
+
         datos = db.session.query(
             Alimento.nombre,
             Alimento.cantidad,
@@ -464,24 +396,24 @@ def especialistas(id):
     date = datetime.now()
     date = date.strftime("%b, %d %Y")
 
-    comida_alias = aliased(Comida)
-    espe_alias = aliased(Especialista)
-
     result = db.session.query(
-        espe_alias.pri_nombre, 
-        espe_alias.pri_apellido, 
-        espe_alias.especialidad,
-        espe_alias.id_espe
+        Especialista.pri_nombre, 
+        Especialista.pri_apellido, 
+        Especialista.especialidad,
+        Especialista.id_espe
     ).join(
-        comida_alias, espe_alias.id_espe == comida_alias.id_espe
+        Asignacion, Especialista.id_espe == Asignacion.id_espe
     ).filter(
-        comida_alias.id_paciente == id
-    ).distinct()
+        Asignacion.id_paciente == id
+    ).distinct().all()
 
-    # Obtener el objeto get_pac
-    get_pac = db.session.query(Paciente).filter_by(id_paciente=id).first()
+    get_pac = Paciente.query.get(id)
 
-    return render_template('p_ver_especialistas.html', id=id, result=result, date=date, get_pac=get_pac)
+    return render_template('p_ver_especialistas.html', 
+                         id=id, 
+                         result=result, 
+                         date=date, 
+                         get_pac=get_pac)
 # // >
 
 # Detalle especialistas <
@@ -540,3 +472,57 @@ def get_comida(id, date):
         return jsonify({'message': f'Error al obtener la comida: {e}'}), 500
     finally:
         db.session.close()
+
+@pac.route('/addFood/<id>', methods=['GET', 'POST'])
+def addFood(id):
+    get_pac = Paciente.query.get(id)
+    get_esp = Especialista.query.all()
+    alimentos = Alimento.query.all() 
+
+    alimentos = db.session.query(Alimento).all()
+    print("DEBUG: Base de datos conectada en:", db.engine.url)
+    print("DEBUG: Alimentos en sesión:", len(alimentos))
+
+    if request.method == 'POST':
+        try:
+            # Obtener datos del formulario
+            id_espe = request.form['id-espe']
+            tipo_comida = request.form['tipo-comida']
+            satisfaccion = request.form['satisfaccion']
+            comentario = request.form['comentario']
+            fecha_ini = datetime.strptime(request.form['fecha-ini'], '%Y-%m-%dT%H:%M')
+            
+            # Crear nueva comida
+            nueva_comida = Comida(
+                id_paciente=id,
+                id_espe=id_espe,
+                fecha_ini=fecha_ini,
+                tipo=tipo_comida,
+                satisfaccion=satisfaccion,
+                comentario=comentario
+            )
+            db.session.add(nueva_comida)
+            
+            # Agregar alimentos relacionados
+            alimentos_ids = request.form.getlist('alimentos[]')
+            for alimento_id in alimentos_ids:
+                ac = AC(
+                    id_paciente=id,
+                    id_espe=id_espe,
+                    fecha_ini=fecha_ini,
+                    id_alimento=alimento_id
+                )
+                db.session.add(ac)
+            
+            db.session.commit()
+            flash("Comida registrada exitosamente", "success")
+            return redirect(url_for('paciente.inicio', id=id))
+            
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al registrar la comida: {str(e)}", "danger")
+    
+    return render_template('p_add_comida.html', 
+                         get_pac=get_pac,
+                         get_esp=get_esp,
+                         alimentos=alimentos)
