@@ -6,7 +6,7 @@ from src.database.db import db
 from datetime import datetime
 
 # Entidades
-from src.models.models import Especialista, Paciente, Comida, AC, Alimento
+from src.models.models import Especialista, Paciente, Comida, AC, Alimento, Asignacion
 # 
 
 # FIXME: Hay que agregar los try-catch en todos los metodos
@@ -196,18 +196,19 @@ def deleteAccount(id):
 def addFood(id):     
 
     get_pac = db.session.query(Paciente).filter(Paciente.id_paciente == id).first()
-    get_esp = db.session.query(
-        Especialista.id_espe,
-        Especialista.pri_nombre,
-        Especialista.pri_apellido
-    ).select_from(Comida)\
-    .join(Paciente, Comida.id_paciente == Paciente.id_paciente)\
-    .join(Especialista, Comida.id_espe == Especialista.id_espe)\
-    .filter(
-        Paciente.id_paciente == id
-    ).distinct().all()
-    get_ali = db.session.query(Alimento).all()
+    get_esp = (
+        db.session.query(Especialista)
+        .join(Asignacion, Especialista.id_espe == Asignacion.id_espe)
+        .filter(Asignacion.id_paciente == id)
+        .all()
+    )
+    
+    if not get_esp:
+        flash("No tienes especialistas asignados. Contacta a la fundación.", "warning")
+        return redirect(url_for('paciente.inicio', id=id))
 
+    get_ali = db.session.query(Alimento).all()
+    
     if get_pac is None:
         flash('Paciente no encontrado.', 'danger')
         return redirect(url_for('index.index')) 
@@ -222,7 +223,7 @@ def addFood(id):
 
             new_comida = Comida(
                 get_pac.id_paciente,
-                id_espe,
+                int(id_espe),
                 fecha_ini,
                 tipo_comida,
                 satisfaccion,
@@ -259,7 +260,7 @@ def addFood(id):
 
         return redirect(url_for('paciente.inicio', id=id))
     
-    return render_template('p_add_comida.html', id=id, get_pac=get_pac, get_ali=get_ali, get_esp=get_esp)
+    return render_template('p_add_comida.html', id=id, get_pac=get_pac, get_ali=get_ali, get_esp=get_esp, selected_alimentos=[])
 # // >
 
 # Detalle de comida <

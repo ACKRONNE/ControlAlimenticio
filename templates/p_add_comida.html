@@ -109,12 +109,12 @@
                           <!-- Cada campo con su .form-group y los controles con .form-control -->
                           <div class="form-group">
                             <label>Especialistas</label>
-                            <select name="id-espe" class="form-control">
-                              <option value="">Selecciona el nombre</option>
-                              {% for espe in get_esp %}
-                                <option value="{{ espe.id_espe }}">{{ espe.pri_nombre }} {{ espe.pri_apellido }}</option>
-                              {% endfor %}
-                            </select>
+                                <select name="id-espe" class="form-control">
+                                    <option value="">Selecciona el nombre</option>
+                                    {% for espe in get_esp %}
+                                        <option value="{{ espe.id_espe }}">{{ espe.pri_nombre }} {{ espe.pri_apellido }}</option>
+                                    {% endfor %}
+                                </select>
                           </div>
                   
                           <div class="form-group">
@@ -142,18 +142,24 @@
                             <label>Alimentos</label>
                             <div class="input-group mb-3">
                               <select id="alimentos-select" name="alimentos[]" class="form-control">
-                                <option value="">Selecciona el nombre</option>
-                                {% for alimento in get_ali %}
-                                  <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
-                                {% endfor %}
+                                    <option value="">Selecciona el nombre</option>
+                                    {% for alimento in get_ali %}
+                                        <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }}</option>
+                                    {% endfor %}
                               </select>
                               <div class="input-group-append">
                                 <button type="button" id="add-alimento" class="btn btn-primary">Agregar otro Alimento</button>
                               </div>
                             </div>
-                            <ul id="selected-alimentos" class="list-group">
-                              <!-- … -->
-                            </ul>
+                                <ul id="selected-alimentos" class="list-group">
+                                    {% for alimento in selected_alimentos %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{ alimento.id_alimento }}">
+                                            {{ alimento.nombre }}
+                                            <input type="hidden" name="alimentos[]" value="{{ alimento.id_alimento }}">
+                                            <button type="button" class="btn btn-danger btn-sm remove-alimento">Eliminar</button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                           </div>
                   
                           <div class="form-group">
@@ -251,9 +257,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{ url_for('static', filename='js/demo/chart-area-demo.js') }}"></script>

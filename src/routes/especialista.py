@@ -6,7 +6,7 @@ from src.database.db import db
 from datetime import datetime
 
 # Entidades
-from src.models.models import Especialista, Paciente, Comida, AC, Alimento
+from src.models.models import Especialista, Paciente, Comida, AC, Alimento, Asignacion
 # //
 
 esp = Blueprint('especialista', __name__)
@@ -342,3 +342,51 @@ def updateFood(id_espe, id_pac, fecha_ini):
 
     else:
         return render_template('e_editar_receta.html', get_esp=get_esp, get_pac=get_pac, get_comida=get_comida)
+
+# Asignar paciente <
+@esp.route('/asignar_paciente', methods=['POST'])
+def asignar_paciente():
+    try:
+        id_espe_str = request.form.get('id_espe')
+        id_paciente_str = request.form.get('id_paciente')
+
+        if not id_espe_str or not id_paciente_str:
+            return jsonify({"error": "IDs faltantes"}), 400
+
+        id_espe = int(id_espe_str)
+        id_paciente = int(id_paciente_str)
+
+        especialista = Especialista.query.get(id_espe)
+        paciente = Paciente.query.get(id_paciente)
+        
+        if not especialista:
+            return jsonify({"error": "Especialista no encontrado"}), 404
+        if not paciente:
+            return jsonify({"error": "Paciente no encontrado"}), 404
+
+        if Asignacion.query.filter_by(id_espe=id_espe, id_paciente=id_paciente).first():
+            return jsonify({"error": "La asignación ya existe"}), 409
+
+        nueva_asignacion = Asignacion(
+            id_espe=id_espe,
+            id_paciente=id_paciente
+        )
+        
+        db.session.add(nueva_asignacion)
+        db.session.commit()
+        return jsonify({"mensaje": "Paciente asignado correctamente"}), 201
+
+    except ValueError:
+        return jsonify({"error": "Los IDs deben ser números enteros"}), 400
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+# //    
+
+@esp.route('/asignar_paciente/<int:id>', methods=['GET'])
+def mostrar_asignacion(id):
+    get_esp = Especialista.query.get(id)
+    pacientes_no_asignados = Paciente.query.filter(~Paciente.asignaciones.any(id_espe=id)).all()
+    return render_template('e_asignar_paciente.html', 
+                         get_esp=get_esp,
+                         pacientes_disponibles=pacientes_no_asignados)

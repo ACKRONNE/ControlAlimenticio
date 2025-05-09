@@ -1,0 +1,173 @@
+{% extends 'layout.html' %}
+
+{% block title %}Asignar Paciente{% endblock %}
+
+{% block body %}
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Inicio</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Acciones
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.mostrar_asignacion', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-book-medical"></i>
+                    <span>Asignar Paciente</span></a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Topbar (Misma estructura que e_inicio.html) -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Sidebar Toggle -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{get_esp.pri_nombre}} {{get_esp.pri_apellido}}</span>
+                            <img class="img-profile rounded-circle"
+                                src="{{ url_for('static', filename='../static/img/undraw_profile.svg') }}">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{{ url_for('especialista.perfil', id=get_esp.id_espe)}}">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Perfil
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Cerrar Sesión
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid">
+                <!-- Header -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Asignar Nuevo Paciente</h1>
+                </div>
+
+                <!-- Formulario -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Seleccionar Paciente</h6>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" action="{{ url_for('especialista.asignar_paciente') }}">
+                                    <input type="hidden" name="id_espe" value="{{ get_esp.id_espe }}">
+                                    
+                                    <div class="form-group">
+                                        <label class="font-weight-bold text-gray-800">Pacientes disponibles</label>
+                                        <select class="form-control" name="id_paciente" required>
+                                            <option value="" disabled selected>Seleccione un paciente</option>
+                                            {% for paciente in pacientes_disponibles %}
+                                            <option value="{{ paciente.id_paciente }}">
+                                                {{ paciente.pri_nombre }} {{ paciente.pri_apellido }} - {{ paciente.correo }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-save"></i>
+                                        </span>
+                                        <span class="text">Asignar Paciente</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel informativo -->
+                    <div class="col-lg-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Instrucciones</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>1. Selecciona un paciente de la lista</p>
+                                <p>2. Verifica los datos antes de asignar</p>
+                                <p>3. Los pacientes asignados aparecerán en tu lista principal</p>
+                                <hr>
+                                <p class="small text-muted">Solo se muestran pacientes no asignados previamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer (Misma estructura que e_inicio.html) -->
+            <footer class="sticky-footer bg-white">
+                <!-- ... -->
+            </footer>
+        </div>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Listo para irte?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Selecciona "Cerrar sesión" abajo si estás listo para finalizar tu sesión.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-primary" href="{{ url_for('index.logout', id=get_esp.id_espe) }}">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='../static/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/js/sb-admin-2.min.js') }}"></script>
+    
+</body>
+{% endblock %}

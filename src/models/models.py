@@ -130,3 +130,18 @@ class AC(db.Model):
     self.fecha_ini = fecha_ini
     self.id_alimento = id_alimento
 # //
+
+# 6
+class Asignacion(db.Model):
+    __tablename__ = 'asignaciones'
+    
+    id_paciente = Column(Integer, ForeignKey('pacientes.id_paciente'), primary_key=True)
+    id_espe = Column(Integer, ForeignKey('especialistas.id_espe'), primary_key=True)
+    
+    paciente = db.relationship('Paciente', backref='asignaciones')
+    especialista = db.relationship('Especialista', backref='asignaciones')
+
+    def __init__(self, id_paciente, id_espe):
+        self.id_paciente = id_paciente
+        self.id_espe = id_espe
+# //
