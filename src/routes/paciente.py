@@ -79,23 +79,19 @@ def registro():
 @pac.route('/inicio/<id>', methods=['GET', 'POST'])
 def inicio(id):
 
-    # Consulta de todos los datos del paciente
     get_pac = db.session.query(Paciente).filter(Paciente.id_paciente == id).first()
 
     if get_pac is None:
         flash('Paciente no encontrado.', 'danger')
         return redirect(url_for('index.index')) 
-    # //
 
-    # Fecha Actual
     date = datetime.now()
     formatted_date = date.strftime("%d, %B %Y")
-    # //
 
     if request.method == "POST":
         fecha_str = request.form['pac-fecha']
         try:
-            # Convertir a datetime y crear rango de 24hrs
+    
             fecha = datetime.strptime(fecha_str, '%Y-%m-%d')
             start_date = fecha.replace(hour=0, minute=0, second=0)
             end_date = fecha.replace(hour=23, minute=59, second=59)
@@ -103,10 +99,9 @@ def inicio(id):
             flash("Formato de fecha inválido. Use YYYY-MM-DD", "danger")
             return redirect(url_for('paciente.inicio', id=id))
 
-        # Formatear fecha para mostrar
+
         formatted_date = fecha.strftime("%d, %B %Y")
 
-        # Consulta usando rango de fechas (más eficiente que CAST)
         tipo = db.session.query(Comida.tipo, Comida.fecha_ini)\
             .filter(Comida.fecha_ini.between(start_date, end_date))\
             .filter(Comida.id_paciente == id)\
@@ -124,7 +119,6 @@ def inicio(id):
         .filter(Comida.comentario != None)
         .order_by(Comida.fecha_ini)
     ).all()
-    # //
 
     return render_template("p_inicio.html", get_pac=get_pac, formatted_date=formatted_date, date=formatted_date, tipo=tipo)
 # // >
@@ -181,8 +175,9 @@ def updateProfile(id):
 def deleteAccount(id):
     paciente = Paciente.query.get(id)
 
-
     if paciente:
+        for asignacion in paciente.asignaciones:
+            db.session.delete(asignacion)
         db.session.delete(paciente)
         db.session.commit()
         db.session.close()
