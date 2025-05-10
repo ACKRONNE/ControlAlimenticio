@@ -97,6 +97,26 @@
               </div>
           </div>
       </div>
+
+      <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger" id="errorModalLabel">Error en el formulario</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="errorMessage">
+              <!-- Mensaje de error dinámico -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
   </div>
 
   <!-- Scripts -->
@@ -158,6 +178,95 @@
 
           // Inicializar
           updateForm();
+      });
+
+            document.addEventListener('DOMContentLoaded', function() {
+          // ... (código existente sin cambios) ...
+
+          // Validación personalizada al enviar el formulario
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              const errors = [];
+
+              // Validar formato de teléfono
+              const telefono = document.querySelector('[data-prefix="telefono"]').value;
+              const phoneRegex = /^[+]?[0-9\s-]{7,}$/;
+              if (!phoneRegex.test(telefono)) {
+                  errors.push("Número de teléfono inválido");
+              }
+
+              // Validar contraseñas coincidentes
+              const pass1 = document.querySelector('[data-prefix="clave"]').value;
+              const pass2 = document.querySelector('[data-prefix="clave2"]').value;
+              if (pass1 !== pass2) {
+                  errors.push("Las contraseñas no coinciden");
+              }
+
+              // Validar fecha de nacimiento (solo para pacientes)
+              if (document.querySelector('input[name="tipo"]:checked').value === 'paciente') {
+                  const fechaNac = new Date(fechaNacimientoInput.value);
+                  const hoy = new Date();
+                  const edadMinima = new Date();
+                  edadMinima.setFullYear(hoy.getFullYear() - 18);
+                  
+                  if (fechaNac >= hoy) {
+                      errors.push("La fecha de nacimiento no puede ser futura");
+                  } else if (fechaNac >= edadMinima) {
+                      errors.push("Debes ser mayor de 18 años");
+                  }
+              }
+
+              // Mostrar errores o enviar formulario
+              if (errors.length > 0) {
+                  document.getElementById('errorMessage').innerHTML = errors.join('<br>');
+                  $('#errorModal').modal('show');
+              } else {
+                  // Verificar correo existente (simulación)
+                  const correo = document.querySelector('[data-prefix="correo"]').value;
+                  fetch('/verificar-correo', {
+                      method: 'POST',
+                      body: JSON.stringify({ correo: correo })
+                  }).then(response => {
+                      if (response.correoExiste) {
+                          document.getElementById('errorMessage').innerHTML = "El correo electrónico ya está registrado";
+                          $('#errorModal').modal('show');
+                      } else {
+                          form.submit(); // Envío real si todo está bien
+                      }
+                  });
+              }
+          });
+
+          form.addEventListener('submit', async function(e) {
+              e.preventDefault();
+              const errors = [];
+              try {
+                  const response = await fetch('/verificar-correo', {
+                      method: 'POST',
+                      headers: {'Content-Type': 'application/json'},
+                      body: JSON.stringify({ correo: document.querySelector('[data-prefix="correo"]').value })
+                  });
+                  
+                  const data = await response.json();
+                  
+                  if (data.existe) {
+                      errors.push("El correo electrónico ya está registrado");
+                  }
+                  
+                  if (errors.length > 0) {
+                      mostrarErrores(errors);
+                  } else {
+                      form.submit();
+                  }
+              } catch (error) {
+                  console.error('Error:', error);
+              }
+          });
+
+          function mostrarErrores(errors) {
+              document.getElementById('errorMessage').innerHTML = errors.join('<br>');
+              $('#errorModal').modal('show');
+          }          
       });
   </script>
 </body>

@@ -34,19 +34,12 @@
                                               <input type="password" class="form-control form-control-user"
                                                   name="ind-clave" placeholder="Contraseña">
                                           </div>
-                                          <!-- <div class="form-group"> TODO: Hacer que funcione el checkbox
-                                              <div class="custom-control custom-checkbox small">
-                                                  <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                  <label class="custom-control-label" for="customCheck">Remember
-                                                      Me</label>
-                                              </div>
-                                          </div> -->
+
                                           <button type="submit" class="btn btn-primary btn-user btn-block">
                                               Iniciar Sesion
                                           </button>
                                           <hr>
                                       </form>
-
 
                                         <!-- Modal de Error -->
                                         <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -72,7 +65,7 @@
                                           <a class="small" href="{{ url_for('index.reset_request') }}">Olvidaste tu contraseña?</a>
                                       </div> -->
                                       <div class="text-center">
-                                          <a class="small" href="{{ url_for('index.registro') }}">Crea una cuenta!</a>
+                                          <a class="small" href="{{ url_for('index.registro') }}">Crea una cuenta</a>
                                       </div>
                                   </div>
                               </div>
@@ -97,17 +90,13 @@
       <script src="../static/js/sb-admin-2.min.js"></script>
       <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ... Código existente ...
     
-            // Función de validación
             function validarFormulario(event) {
-                event.preventDefault(); // Prevenir envío
+                event.preventDefault();
                 let isValid = true;
     
-                // Limpiar mensajes anteriores
                 document.querySelectorAll('.error-msg').forEach(msg => msg.remove());
     
-                // Validar campos comunes
                 const camposRequeridos = form.querySelectorAll('[required]');
                 camposRequeridos.forEach(campo => {
                     if (!campo.value.trim()) {
@@ -116,14 +105,12 @@
                     }
                 });
     
-                // Validar email
                 const email = form.querySelector('[type="email"]');
                 if (!validarEmail(email.value)) {
                     mostrarError(email, 'Correo electrónico inválido');
                     isValid = false;
                 }
     
-                // Validar contraseñas
                 const clave = form.querySelector('[data-prefix="clave"]');
                 const clave2 = form.querySelector('[data-prefix="clave2"]');
                 if (clave.value !== clave2.value) {
@@ -135,7 +122,6 @@
                     isValid = false;
                 }
     
-                // Validar campos condicionales
                 const tipo = document.querySelector('input[name="tipo"]:checked').value;
                 if (tipo === 'especialista') {
                     const especialidad = document.getElementById('especialidadInput');
@@ -151,7 +137,6 @@
                     }
                 }
     
-                // Validar género seleccionado
                 const genero = form.querySelector('[name="sexo"]:checked');
                 if (!genero) {
                     mostrarError(form.querySelector('[name="sexo"]').closest('.form-group'), 'Selecciona un género');
@@ -159,16 +144,14 @@
                 }
     
                 if (isValid) {
-                    form.submit(); // Enviar si todo está bien
+                    form.submit();
                 }
             }
     
-            // Helper para validar email
             function validarEmail(email) {
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
     
-            // Helper para mostrar errores
             function mostrarError(campo, mensaje) {
                 const errorMsg = document.createElement('div');
                 errorMsg.className = 'error-msg text-danger small mt-1';
@@ -177,7 +160,6 @@
                 campo.focus();
             }
     
-            // Agregar event listener al formulario
             form.addEventListener('submit', validarFormulario);
         });
     </script>

@@ -35,6 +35,11 @@ def registro():
     if clave != clave2:
         return "Las contraseñas no coinciden", 400
     
+    paciente_existente = Paciente.query.filter_by(correo=correo).first()
+    if paciente_existente:
+        flash('Este correo ya está registrado', 'danger')
+        return redirect(url_for('paciente.registro'))    
+    
     # Hacer la contraseña segura
     hashed_clave = generate_password_hash(clave)   
     # //
@@ -178,6 +183,7 @@ def deleteAccount(id):
     if paciente:
         for asignacion in paciente.asignaciones:
             db.session.delete(asignacion)
+
         db.session.delete(paciente)
         db.session.commit()
         db.session.close()

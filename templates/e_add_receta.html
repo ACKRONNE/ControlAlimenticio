@@ -16,6 +16,7 @@
 
             <hr class="sidebar-divider my-0">
 
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -24,17 +25,23 @@
 
             <hr class="sidebar-divider">
 
-            <!-- <div class="sidebar-heading">
+            <div class="sidebar-heading">
                 Acciones
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('especialista.receipeList', id=get_esp.id_espe) }}">
+                <a class="nav-link" href="{{ url_for('especialista.mostrar_asignacion', id=get_esp.id_espe) }}">
                     <i class="fas fa-fw fa-book-medical"></i>
                     <span>Asignar Paciente</span></a>
-            </li> -->
+            </li>
 
-            <!-- <hr class="sidebar-divider d-none d-md-block"> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.anadir_alimento', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-drumstick-bite"></i>
+                    <span>Añadir Alimento</span></a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -104,19 +111,6 @@
                                             <input type="radio" name="tipo-comida" value="M"> Merienda
                                         </label>
                                     </div>
-                                </div>
-
-                                <!-- Selección de Paciente -->
-                                <div class="form-group">
-                                    <label class="font-weight-bold">Paciente</label>
-                                    <select class="form-control" name="id-paciente" required>
-                                        <option value="">Seleccione un paciente</option>
-                                        {% for paciente in get_pac %}
-                                        <option value="{{ paciente.id_paciente }}">
-                                            {{ paciente.pri_nombre }} {{ paciente.pri_apellido }}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
                                 </div>
 
                                 <!-- Selección de Alimentos -->

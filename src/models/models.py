@@ -20,6 +20,9 @@ class Paciente(db.Model):
       CheckConstraint("sexo IN ('F', 'M', 'O')", name='check_sexo_p'),
   )
 
+  comidas = db.relationship('Comida', backref='paciente', cascade='all, delete')
+
+
   def __init__(self, pri_nombre, pri_apellido, seg_apellido, sexo, correo, telefono, clave, fecha_nacimiento, seg_nombre=None):
       self.pri_nombre = pri_nombre
       self.pri_apellido = pri_apellido

@@ -4,29 +4,49 @@
 
 {% block body %}
 <body id="page-top">
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('especialista.inicio', id=get_esp.id_espe) }}">
-        <div class="sidebar-brand-icon">
-          <img src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
-        </div>
-        <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
-      </a>
-      <hr class="sidebar-divider my-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Inicio</span></a>
-      </li>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">Fundación Ayudate</div>
+            </a>
 
-      <!-- Agrega aquí los elementos específicos del especialista si son necesarios -->
-      
-      <hr class="sidebar-divider d-none d-md-block">
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-    </ul>
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Inicio</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Acciones
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.mostrar_asignacion', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-book-medical"></i>
+                    <span>Asignar Paciente</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.anadir_alimento', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-drumstick-bite"></i>
+                    <span>Añadir Alimento</span></a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
 
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
@@ -80,7 +100,6 @@
                 <form action="{{ url_for('especialista.deleteAccount', id=get_esp.id_espe) }}" method="post" class="d-inline">
                   <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
                 </form>
-                <a href="#" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#logoutModal">Cerrar Sesión</a>
               </div>
             </div>
           </div>
@@ -144,7 +163,7 @@
             </div>
         </div>
 
-        <!-- Logout Modal (Usar el mismo de p_perfil) -->
+        <!-- Logout Modal -->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -160,7 +179,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <!-- Footer -->

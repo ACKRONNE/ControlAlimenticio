@@ -67,7 +67,7 @@ def inicio(id):
     # //
 
     # Consulta todos los pacientes del especialista
-    pacientes = select(distinct(Comida.id_paciente)).where(Comida.id_espe == id)
+    pacientes = select(distinct(Asignacion.id_paciente)).where(Asignacion.id_espe == id)
     get_pac = db.session.query(Paciente).filter(Paciente.id_paciente.in_(pacientes)).all()
     # //
 
@@ -390,3 +390,40 @@ def mostrar_asignacion(id):
     return render_template('e_asignar_paciente.html', 
                          get_esp=get_esp,
                          pacientes_disponibles=pacientes_no_asignados)
+
+# Añadir Alimento <
+@esp.route('/anadir_alimento/<int:id>', methods=['GET', 'POST'])
+def anadir_alimento(id):
+    get_esp = db.session.query(Especialista).filter(Especialista.id_espe == id).first()
+    
+    if request.method == "POST":
+        try:
+            tipo = request.form['tipo']
+            nombre = request.form['nombre']
+            cantidad = request.form['cantidad']
+            
+            nuevo_alimento = Alimento(
+                tipo=tipo,
+                nombre=nombre,
+                cantidad=cantidad
+            )
+            
+            db.session.add(nuevo_alimento)
+            db.session.commit()
+            flash("Alimento agregado exitosamente", "success")
+            
+        except Exception as e:
+            db.session.rollback()
+            flash("Error al agregar el alimento", "danger")
+            print(f"Error: {e}")
+            
+        return redirect(url_for('especialista.inicio', id=id))
+    
+    # Opciones predefinidas para el tipo
+    tipos_alimento = ['Proteina', 'Carbohidrato', 'Grasa', 'Vegetal', 
+                     'Fruta', 'Bebida', 'Dulce', 'Otros']
+    
+    return render_template('e_anadir_alimento.html', 
+                         get_esp=get_esp,
+                         tipos=tipos_alimento)
+# //

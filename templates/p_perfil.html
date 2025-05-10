@@ -97,9 +97,7 @@
                 <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">Editar Perfil</button>
                 <form action="{{ url_for('paciente.deleteAccount', id=paciente.id_paciente) }}" method="post" class="d-inline">
                   <button type="submit" class="btn btn-danger">Eliminar Cuenta</button> 
-                  <!-- FIXME: No funciona eliminar la cuenta-->
                 </form>
-                <a href="#" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#logoutModal">Cerrar Sesión</a>
               </div>
             </div>
           </div>

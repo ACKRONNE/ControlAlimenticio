@@ -77,12 +77,14 @@ def login():
 # Cerrar sesion del usuario <
 @ind.route('/logout/<id>', methods=['GET'])
 def logout(id):
-    
     user = Paciente.query.get(id)
-    if user is None:
+    user2 = Especialista.query.get(id)
+
+    if user is None and user2 is None:
         return "Usuario no encontrado"
 
-    if (user.id_paciente == int(id) or user.id_empleado == int(id)):
+    if (user is not None and user.id_paciente == int(id) and session['logueado']) \
+       or (user2 is not None and user2.id_espe == int(id) and session['logueado']):
         session.pop('id', None)
         session.clear()
         return redirect(url_for('index.index'))

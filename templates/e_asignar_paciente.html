@@ -17,7 +17,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{url_for('especialista.inicio', id=get_esp.id_espe)}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Inicio</span></a>
@@ -29,10 +29,16 @@
                 Acciones
             </div>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ url_for('especialista.mostrar_asignacion', id=get_esp.id_espe) }}">
                     <i class="fas fa-fw fa-book-medical"></i>
                     <span>Asignar Paciente</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('especialista.anadir_alimento', id=get_esp.id_espe) }}">
+                    <i class="fas fa-fw fa-drumstick-bite"></i>
+                    <span>Añadir Alimento</span></a>
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">
@@ -161,7 +167,27 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+
+            <!-- Modal de Éxito -->
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title" id="successModalLabel">¡Asignación Exitosa!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            El paciente ha sido asignado correctamente a tu lista.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
     <!-- Scripts -->
@@ -169,5 +195,36 @@
     <script src="{{ url_for('static', filename='../static/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/js/sb-admin-2.min.js') }}"></script>
     
+    <script>
+    $(document).ready(function() {
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: form.serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.mensaje) {
+                        $('#successModal').modal('show');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        alert('Error inesperado');
+                    }
+                },
+                error: function(xhr) {
+                    const error = xhr.responseJSON?.error || "Error en el servidor";
+                    alert(`Error: ${error}`);
+                }
+            });
+        });
+    });
+    </script>
+
+
 </body>
 {% endblock %}
