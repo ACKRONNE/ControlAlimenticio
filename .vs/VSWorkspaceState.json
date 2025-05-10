@@ -4,8 +4,9 @@
     "\\src",
     "\\src\\database",
     "\\src\\routes",
+    "\\static",
     "\\templates"
   ],
-  "SelectedNode": "\\requirements.txt",
+  "SelectedNode": "\\src\\routes\\paciente.py",
   "PreviewInSolutionExplorer": false
 }

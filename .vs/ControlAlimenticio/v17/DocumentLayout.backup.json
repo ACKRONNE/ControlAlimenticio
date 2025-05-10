@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:requirements.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_comida.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:templates\\p_detalle_comida.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\index.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\routes\\index.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\routes\\paciente.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:templates\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_inicio.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:templates\\p_inicio.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,39 +43,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "requirements.txt",
-              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\requirements.txt",
-              "RelativeDocumentMoniker": "requirements.txt",
-              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\requirements.txt",
-              "RelativeToolTip": "requirements.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-05-07T23:04:22.956Z",
+              "Title": "p_detalle_comida.html",
+              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_comida.html",
+              "RelativeDocumentMoniker": "templates\\p_detalle_comida.html",
+              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_detalle_comida.html",
+              "RelativeToolTip": "templates\\p_detalle_comida.html",
+              "ViewState": "AgIAABIAAAAAAAAAAAAswDMAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-09T22:54:58.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "paciente.py",
+              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py",
+              "RelativeDocumentMoniker": "src\\routes\\paciente.py",
+              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\paciente.py",
+              "RelativeToolTip": "src\\routes\\paciente.py",
+              "ViewState": "AgIAALoAAAAAAAAAAAAAAMEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-05-09T22:55:01.334Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\index.html",
-              "RelativeDocumentMoniker": "templates\\index.html",
-              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\index.html",
-              "RelativeToolTip": "templates\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "p_inicio.html",
+              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_inicio.html",
+              "RelativeDocumentMoniker": "templates\\p_inicio.html",
+              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\templates\\p_inicio.html",
+              "RelativeToolTip": "templates\\p_inicio.html",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAD0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-05-07T03:53:46.122Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "index.py",
-              "DocumentMoniker": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\index.py",
-              "RelativeDocumentMoniker": "src\\routes\\index.py",
-              "ToolTip": "C:\\Users\\ampar\\Desktop\\labor social\\ControlAlimenticio\\src\\routes\\index.py",
-              "RelativeToolTip": "src\\routes\\index.py",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-05-07T03:53:41.447Z",
+              "WhenOpened": "2025-05-09T22:54:54.305Z",
               "EditorCaption": ""
             }
           ]
