@@ -138,22 +138,23 @@
                             </div>
                           </div>
 
-                        <div class="form-group">
-                            <label>Alimentos consumidos</label>
-                            <div class="input-group">
-                                <select class="form-control" id="alimentos-select">
-                                    <option value="">Selecciona un alimento</option>
-                                    {% for alimento in alimentos %}
-                                        <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }} ({{ alimento.tipo }})</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="button" id="add-alimento">Agregar</button>
+                            <div class="form-group">
+                                <label>Alimentos consumidos</label>
+                                <input type="text" id="search-alimento" class="form-control mb-2" placeholder="Buscar alimento...">
+                                <div class="input-group">
+                                    <select class="form-control" id="alimentos-select">
+                                        <option value="">Selecciona un alimento</option>
+                                        {% for alimento in alimentos %}
+                                            <option value="{{ alimento.id_alimento }}">{{ alimento.nombre }} ({{ alimento.tipo }})</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" type="button" id="add-alimento">Agregar</button>
+                                    </div>
                                 </div>
+                                <small class="form-text text-muted">Selecciona y agrega todos los alimentos consumidos</small>
+                                <ul class="list-group mt-2" id="selected-alimentos"></ul>
                             </div>
-                            <small class="form-text text-muted">Selecciona y agrega todos los alimentos consumidos</small>
-                            <ul class="list-group mt-2" id="selected-alimentos"></ul>
-                        </div>
                   
                           <div class="form-group">
                             <label>¿Cómo te sientes?</label>
@@ -345,6 +346,19 @@
     document.getElementById('confirmSubmitBtn').addEventListener('click', function() {
         document.querySelector('form').submit();
     });
+    });
+
+    // Dentro del evento DOMContentLoaded
+    document.getElementById('search-alimento').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const select = document.getElementById('alimentos-select');
+        const options = select.querySelectorAll('option');
+        
+        options.forEach((option, index) => {
+            if (index === 0) return; // Ignora la primera opción (placeholder)
+            const text = option.textContent.toLowerCase();
+            option.hidden = !text.includes(searchTerm);
+        });
     });
 
     </script>

@@ -251,7 +251,7 @@ def foodDetail(id):
 def updateFood(id, date):
     try:
         # Convertir parámetro de fecha a datetime
-        date_obj = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')  # Conversión inicial
+        date_obj = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
         
         get_pac = db.session.query(Paciente).filter(Paciente.id_paciente == id).first()
         get_ali = db.session.query(Alimento).all()

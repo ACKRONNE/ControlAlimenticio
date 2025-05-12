@@ -175,9 +175,13 @@ def addFood(id_espe, id_pac):
     if request.method == "POST":
         try:
             tipo_comida = request.form['tipo-comida']
-            id_paciente = request.form['id-paciente']
-            fecha_ini = request.form['fecha-ini']
-            fecha_fin = request.form['fecha-fin']
+            id_paciente = id_pac
+            fecha_ini_str = request.form['fecha-ini']
+            fecha_fin_str = request.form['fecha-fin']
+
+            # Validar y parsear fechas
+            fecha_ini = datetime.strptime(fecha_ini_str, '%Y-%m-%dT%H:%M')
+            fecha_fin = datetime.strptime(fecha_fin_str, '%Y-%m-%dT%H:%M')
     
             new_comida = Comida(
                 id_paciente,
@@ -190,12 +194,11 @@ def addFood(id_espe, id_pac):
             )
             db.session.add(new_comida)
             db.session.commit()
-            print("Comida agregada con exito")
             flash("Comida agregada correctamente", "success")
 
-            _alimmento = request.form.getlist('alimentos[]')
+            _alimentos = request.form.getlist('alimentos[]')
 
-            for alimento in _alimmento:
+            for alimento in _alimentos:
                 if alimento:
                     new_ac = AC(
                         id_paciente,
@@ -205,13 +208,15 @@ def addFood(id_espe, id_pac):
                     )
                     db.session.add(new_ac)
 
-                    print("Registro de alimento agregado con exito")
-                    flash("Registro de alimento agregado con exito")
-    
             db.session.commit()
+            flash("Registro de alimento agregado con éxito", "success")
+    
+        except ValueError:
+            flash("Formato de fecha inválido. Use YYYY-MM-DD", "danger")
+            return redirect(url_for('esp.addFood', id_espe=id_espe, id_pac=id_pac))
         except Exception as e:
             db.session.rollback()
-            flash("Ocurrio un error al agregar la comida", "danger")
+            flash("Ocurrió un error al agregar la comida", "danger")
             print(f"Error: {e}")      
         finally:
             db.session.close()
@@ -223,15 +228,21 @@ def addFood(id_espe, id_pac):
 # //
 
 
-# Detalle Comida de un paciente especifico
 @esp.route('/detalles_comidas/<id_espe>/<id_pac>', methods=['GET', 'POST'])
 def foodDetail(id_espe, id_pac):
     get_esp = db.session.query(Especialista).filter(Especialista.id_espe == id_espe).first()
     get_pac = db.session.query(Paciente).filter(Paciente.id_paciente == id_pac).first()
 
-    # Obtener parámetros de filtrado
     fecha_ini = request.args.get('fecha_ini')
     tipo_comida = request.args.get('tipo_comida')
+
+    parsed_date = None
+    if fecha_ini:
+        try:
+            parsed_date = datetime.strptime(fecha_ini, '%Y-%m-%d').date()
+        except ValueError:
+            flash("Formato de fecha inválido. Use YYYY-MM-DD", "danger")
+            return redirect(url_for('esp.detalles_comidas', id_espe=id_espe, id_pac=id_pac))
 
     query = db.session.query(
         Alimento.nombre,
@@ -251,9 +262,8 @@ def foodDetail(id_espe, id_pac):
         Comida.id_paciente == id_pac,
     )
 
-    # Aplicar filtros si están presentes
     if fecha_ini:
-        query = query.filter(db.func.date(Comida.fecha_ini) == fecha_ini)
+        query = query.filter(db.func.date(Comida.fecha_ini) == parsed_date)
     if tipo_comida:
         query = query.filter(Comida.tipo == tipo_comida)
 
@@ -308,7 +318,6 @@ def updateFood(id_espe, id_pac, fecha_ini):
             tipo_comida = request.form['tipo-comida']
             fecha_ini = request.form['fecha-ini']
             fecha_fin = request.form['fecha-fin']
-            # Verificar que todos los datos necesarios están presentes
             get_comida.tipo_comida = tipo_comida
             get_comida.fecha_ini = fecha_ini
             get_comida.fecha_fin = fecha_fin
